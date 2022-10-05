@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 0px;
+  /*
+  padding: 6px 12px;
+  
+  border: 1px solid #ccc;
+  border-top: none;
+  */
+  border: none;
+}
+
+/* Style table */
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: left;
+  padding: 3px;
+}
+
+.tabvertical tr:nth-child(even) {
+  background-color: #def3ca;
+}
+.tabvertical tr:nth-child(odd) {
+ background-color: #fff;
+}
+
+.tabhorizontal tr:nth-child(even) {
+  background-color: #fff;
+}
+.tabhorizontal tr:nth-child(odd) {
+ background-color: #def3ca;
+}
+
+.tabheader th {
+  background-color: #04AA6D;
+  color: white;
+}
+
+tr.tabtotal {
+  border-top: 3px solid;
+}
+.tabtotal {
+  background-color: #fff !important;
+}
+
+.toolBarButton {
+  margin: 0px;
+  margin-bottom: 4px;
+  padding: 0px;
+} 
+
+</style>
+</head>
+
+<body onload="initPanels()">
+
+<div style="display:flex; justify-content:space-between; width:100%; padding:0;">
+	<p><b>Layer: </b><i>{{ layerName|sn }}</i></p>
+
+	<button id="btnZoom" class="toolBarButton" onclick="onZoomToSuolo()" title="Zoom sull'appezzamento">
+		<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSJVByuIOGSoThZERRxLFYtgobQVWnUwufQLmjQkKS6OgmvBwY/FqoOLs64OroIg+AHi5Oik6CIl/i8ptIjx4Lgf7+497t4BQqPCVLNrElA1y0jFY2I2tyoGXiGgH0MIQ5CYqSfSixl4jq97+Ph6F+FZ3uf+HH1K3mSATySOMt2wiDeIZzctnfM+cYiVJIX4nHjCoAsSP3JddvmNc9FhgWeGjExqnjhELBY7WO5gVjJU4hnisKJqlC9kXVY4b3FWKzXWuid/YTCvraS5TnMUcSwhgSREyKihjAosRGjVSDGRov2Yh3/E8SfJJZOrDEaOBVShQnL84H/wu1uzMD3lJgVjQPeLbX+MAYFdoFm37e9j226eAP5n4Epr+6sNYO6T9HpbCx8BA9vAxXVbk/eAyx1g+EmXDMmR/DSFQgF4P6NvygGDt0Dvmttbax+nD0CGulq+AQ4OgfEiZa97vLuns7d/z7T6+wFFz3KVWhgVzwAAAAZiS0dEAP8AxwAAp8f8NgAAAAlwSFlzAAAN1wAADdcBQiibeAAAAAd0SU1FB+QCDhUlD7m/e4oAAAO8SURBVEjHrZRLbFtFFIbPzB3f66T4mRdVmsRSEhsIAkRUEQRR2ERRhHBrRy7bbpoNUbdECPHoAkVIkbphgYRESsiiYDsmkZsFuzgPVY4lZEVKQLKtPGSJ1LfBxvZ9zdxhUVJCqV2X5t/OzPefOWfmR/AUCgQCL1oslvcEQXibUuo2TVMghJQA4BdFUeJLS0sJAOCnz6BGwKFQyEEI+RwALo6OjkrDw8Muh8tl5Zwb+cPDP7a3t43V1VWlVCod6br+0eLi4m8NGwSDwQuEkG+GhobsoStXbO6WlvMYY3KybpomLR4f73HOeSKR4JFIROecT4fD4QQAgPCEyp8jhHw7Pj7eOjEx0eRwuS6cwE3OTV3T/lSq1QI3TYoQgp6eHtTX10e2trbe8Xq9a7u7uzKuZ4AQ+sDn87WMjY0JzefOdWCMBQ7ANUWRS8fHuWqlcsQo1U6f6e/vh2AwKImi+AUAIKFO9W4AuDE1NSU6HI5ma1OTGwBAKZd/V1W1VK+wrq4utLGxIXk8nkzNGzDGRnp7e6nL5QLJarUDADBKVU3Tyk+aG8YYRkZGrFar9d2aBqIovj4wMNCMEAJMSDMAgPFIO+rJ6/UizvlruE4VzzudTsAYCxihB/s4Z40aOJ1OMAzDXm/IhmEYwPk//4ZzbjZqwBgDhBCraUApPZRl2TRNk1FK9b/ffMM3KBQKYLFYaj9TVVXXUqmUCgBQLZfzlUrlnqHr5UYN0uk0MwxjDdfpz11Zls1MJgOMMaqrapGf7lcdKYoC6+vrjHO+VNNgZWVFMwzjaHZ29uWDgwPpaUIxHA7rnPONSCSyi2sn5+WbjLFQNpsVZ2ZmfHt7ew2ZxONxlkqlioSQGzWzKBC4dJ1z9Nnm5ibkcjkkiqKws7Nj9/l899xu92PBsizD3Nyclkwmj1RVnQyHw4XHpmkweOl9T3fnrVdfsEu3Y3chmdqGoaE3QBDID6IotrndbjI4OGhtbW3FgiBAsViEdDpdzeVyBGP8o6IoXy8vL1dPeOTflftDnu7OWx9ee0lqpXcg9ysB0foWIMS/WlyMTYVCITGfz18sFApvSpLUDQAipTSvKErKZrMlFhYW/pNR6BH4/PTkgNTO7kB2X4aPv2tXNSp8Go3GvoT/KVIPrjPhWjQa+x6eQSQQ8Ic6z7fPT08OSG0sDtn9+w/hkcizwQEAiIWgm8O+vNhGc5DZL8Mn8x2qRtHVaDR2G85ARNX4eCRBEoZRtcWTHdoD+E9nAn84ZL/f/4poQT+bHK6fJRwA4C94/9MKwyhDFgAAAABJRU5ErkJggg=='/>
+	</button>
+</div>
+
+<div class="tab">
+  <button id="tabDatiGenerali" class="tablinks" onclick="onChangeTab(event,'tabDatiGenerali','panDatiGenerali')">Dati Generali</button>
+  <button id="tabUsoSuolo" class="tablinks" onclick="onChangeTab(event,'tabUsoSuolo','panUsoSuolo')">Uso del Suolo</button>
+  <button id="tabUsoSecondario" class="tablinks" onclick="onChangeTab(event,'tabUsoSecondario','panUsoSecondario')">Uso secondario</button>
+  <button id="tabUNAR" class="tablinks" onclick="onChangeTab(event,'tabUNAR','panUNAR')">UNAR</button>
+</div>
+
+{# ---------- colture: get first record ---------- #}
+{% if datoPCG.colture is defined and datoPCG.colture %}
+	{% set coltura = datoPCG.colture[0] %}
+{% else %}
+	{% set coltura = dict() %}
+{% endif %}
+
+<div id="panDatiGenerali" class="tabcontent">
+    <!-- Tabulazione verticale -->
+ 	<table class="tabvertical" style="width:100%">
+ 	  <tr>
+	    <th>Validazione - Anno campagna</th><td>{{ datoPCG.dati_validazione.annoCampagna|sn|e }}</td>
+	  </tr>
+	  <tr>
+	    <th>Validazione - Data</th><td>{{ datoPCG.dati_validazione.data|sn|e }}</td>
+	  </tr>
+	  <tr>
+	    <th>Validazione - Pratiche</th><td>{{ datoPCG.dati_validazione.pratiche|sn|e }}</td>
+	  </tr>
+	  <tr>
+	    <th>Validazione - Motivo</th><td>{{ datoPCG.dati_validazione.motivo|sn|e }}</td>
+	  </tr>
+	  <tr>
+	    <th>Codice Isola</th><td>{{ datoPCG.codiIsol|sn|e }}</td>
+	  </tr>
+	  <tr>
+	    <th>ID appezzamento</th><td>{{ datoPCG.idAppe|sn|e }}</td>
+	  </tr>
+	  <tr>
+	    <th>Pratica di mantenimento</th><td>{{ coltura.descrizionePratica|sn|e }}</td>
+	  </tr>
+	</table>
+	
+	<!-- Tabulazione orizzontale -->
+	<table class="tabhorizontal" style="width:100%; margin-top:10px;">
+	    <tr class="tabheader">
+			<th>Codice Parcella</th>
+			<th>Codice Macro Uso Parcella</th> 
+			<th>Descrizione Macro Uso Parcella</th>
+		</tr>
+		{% for datoParcella in datoPCG.parcelle %}
+		<tr>
+		   <td>{{ datoParcella.codiceParcella|sn|e }}</td>
+		   <td>{{ datoParcella.codiceMacroUsoParcella|sn|e }}</td>
+		   <td>{{ datoParcella.descMacroUsoParcella|sn|e }}</td>
+		</tr>
+		{% endfor %}
+		{% if not datoPCG.parcelle %}
+			<td></td>
+			<td></td>
+			<td></td>
+		{% endif %}
+	</table>
+</div>
+
+<div id="panUsoSuolo" class="tabcontent">
+    <!-- Tabulazione verticale -->
+ 	<table class="tabvertical" style="width:100%">
+	  <tr>
+	  	<th>Codice GIS rilevato</th>
+	  	<td>{{ coltura.codiProdRile|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Occupazione</th>
+	  	<td>{{ coltura.codiOccu|sn|e }} - {{ coltura.descUtilizzo|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Destinazione</th>
+	  	<td>{{ coltura.codiDestUsoo|sn|e }} - {{ coltura.descDestinazione|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Uso</th>
+	  	<td>{{ coltura.codiUsoo|sn|e }} - {{ coltura.descDettaglioUso|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Qualità</th>
+	  	<td>{{ coltura.codiQual|sn|e }} - {{ coltura.descQualitaUso|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Superficie totale</th>
+	  	<td>{{ datoPCG.supeAppe|sn|e }} m²</td>
+	  </tr>
+	</table>
+	
+    <!-- Tabulazione orizzontale -->
+	<table class="tabhorizontal" style="width:100%; margin-top:10px;">
+	    <tr class="tabheader">
+<!-- 			<th>Codice GIS rilevato</th> -->
+<!-- 			<th>Occupazione</th>  -->
+<!-- 			<th>Destinazione</th> -->
+<!-- 			<th>Uso</th> -->
+<!-- 			<th>Qualità</th>  -->
+<!-- 			<th>Superficie totale</th> -->		
+			<th>Varietà</th>
+			<th>Sup. utilizzata</th> 
+			<th>Epoca semina</th>
+			<th>Tipo semina</th>
+			<th>Data Inizio</th> 
+			<th>Data Fine</th>
+		</tr>
+		{% for datoColtura in datoPCG.colture %}
+		<tr>
+<!-- 		   <td>{{ datoColtura.codiProdRile|sn|e }}</td> -->
+<!-- 		   <td>{{ datoColtura.descUtilizzo|sn|e }}</td> -->
+<!-- 		   <td>{{ datoColtura.descDestinazione|sn|e }}</td>    -->
+<!-- 		   <td>{{ datoColtura.codiUsoo|sn|e }} - {{ datoColtura.descDettaglioUso|sn|e }}</td> -->
+<!-- 		   <td>{{ datoColtura.codiQual|sn|e }} - {{ datoColtura.descQualitaUso|sn|e }}</td> -->
+<!-- 		   <td>{{ datoPCG.supeAppe|sn|e }} m²</td> --> 
+		   <td>{{ datoColtura.codiOccuVari|sn|e }} - {{ datoColtura.descVarieta|sn|e }}</td>
+		   <td>{{ datoColtura.supeColt|sn|e }} m²</td>
+		   <td>{{ datoColtura.descrizionePeriodoSemina|sn|e }}</td>
+		   <td>{{ datoColtura.descrizioneSemina|sn|e }}</td>
+		   <td>{{ datoColtura.dataInizioSemina|sn|e }}</td>
+		   <td>{{ datoColtura.dataFineSemina|sn|e }}</td>
+		</tr>
+		{% endfor %}
+		{% if not datoPCG.colture %}
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		{% endif %}
+	</table>
+</div>
+
+<div id="panUsoSecondario" class="tabcontent">
+    <!-- Tabulazione verticale -->
+ 	<table class="tabvertical" style="width:100%">
+	  <tr>
+	  	<th>Occupazione</th>
+	  	<td>{{ coltura.codUtilizzoSec|sn|e }} - {{ coltura.descUtilizzoSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Destinazione</th>
+	  	<td>{{ coltura.codDestinazioneSec|sn|e }} - {{ coltura.descDestinazioneSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Uso</th>
+	  	<td>{{ coltura.codDettaglioUsoSec|sn|e }} - {{ coltura.descDettaglioUsoSec|sn|e }}</td>
+	  </tr>
+	  
+	  <tr>
+	  	<th>Qualità</th>
+	  	<td>{{ coltura.codQualitaUsoSec|sn|e }} - {{ coltura.descQualitaUsoSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Varietà</th>
+	  	<td>{{ coltura.codVarietaSec|sn|e }} - {{ coltura.descVarietaSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Epoca semina</th>
+	  	<td>{{ coltura.descPeriodoSeminaSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Tipo semina</th>
+	  	<td>{{ coltura.descSeminaSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Data Inizio</th>
+	  	<td>{{ coltura.dataInizioDestinazioneSec|sn|e }}</td>
+	  </tr>
+	  <tr>
+	  	<th>Data Fine</th>
+	  	<td>{{ coltura.dataFineDestinazioneSec|sn|e }}</td>
+	  </tr>
+	</table>
+</div>
+
+<div id="panUNAR" class="tabcontent">
+	<!-- Tabulazione orizzontale -->
+	<table class="tabhorizontal" style="width:100%; margin-top:10px;">
+	    <tr class="tabheader">
+			<th>Progressivo</th>
+			<th>Area</th>
+			<th>Data impianto</th>
+			<th>Comune</th>
+			<th>Foglio</th>
+			<th>Part.</th>
+			<th>Utilizzo</th>
+		</tr>
+		{% for datoUnar in datoPCG.schedeUnar %}
+		<tr>
+		   <td>{{ datoUnar.progressivoUnar|sn|e }}</td>
+		   <td>{{ datoUnar.area|sn|e }} m²</td>
+		   <td>{{ datoUnar.dataImpianto|sn|e }}</td>
+		   <td>{{ datoUnar.descComune|sn|e }} - {{ datoUnar.sezione|sn|e }}</td>
+		   <td>{{ datoUnar.foglio|sn|e }}</td>
+		   <td>{{ datoUnar.particella|sn|e }}</td>
+		   <td>{{ datoUnar.utilizzo|sn|e }} - {{ datoUnar.varieta|sn|e }} - {{ datoUnar.tipologiaVino|sn|e }}</td>
+		</tr>
+		{% endfor %}
+		{% if not datoPCG.schedeUnar %}
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		{% endif %}
+	</table>
+</div>
+
+{% block scripts %}
+<script type="text/javascript">
+function initPanels() {  
+  var el = document.getElementById("{{currentTabName}}");
+  if (!el) { 
+	  el = document.getElementById("tabDatiGenerali")
+  } 
+  if (!!el) {
+	  el.click();
+  }
+}
+</script>
+{% endblock %}
+
+
+<script type="text/javascript">
+
+function onChangeTab(evt, tabName, panName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(panName).style.display = "block";
+  evt.currentTarget.className += " active";
+  try {
+		pyroleapi.change_suolo_tab(tabName);
+	}
+	catch(err) {
+		alert(err);
+	}
+}
+
+function onZoomToSuolo() 
+{
+	try {
+		pyroleapi.zoom_to_suolo();
+	}
+	catch(err) {
+		alert(err);
+	}
+}
+
+</script>
+   
+</body>
+</html> 

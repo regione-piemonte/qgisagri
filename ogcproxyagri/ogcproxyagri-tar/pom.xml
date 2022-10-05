@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>it.csi.ogcproxyagri</groupId>
+		<artifactId>ogcproxyagri</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>ogcproxyagri-tar</artifactId>
+	<packaging>pom</packaging>
+	<name>ogcproxyagri-tar</name>
+	<description>Produce un archivio TAR contenente l'ear di progetto</description>
+
+	<!-- NOTE: These dependency declarations are only required to sort this 
+		project to the end of the line in the multimodule build. Since we only include 
+		the tstjaxrs-ear module in our assembly, we only need to ensure this distribution 
+		project builds AFTER that one... -->
+
+	<dependencies>
+	<!--	<dependency>
+			<groupId>it.csi.ogcproxyagri</groupId>
+			<artifactId>ogcproxyagri-war</artifactId>
+			<version>1.0.0</version>
+			<type>war</type>
+		</dependency> -->
+	</dependencies>
+
+	<build>
+		<finalName>ogcproxyagri</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>distro-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/assembly/distribution.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>				
+			</plugin>
+		</plugins>
+	</build>
+
+ </project>

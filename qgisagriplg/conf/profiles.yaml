@@ -1,0 +1,27 @@
+##--------------------------------
+## QGIS Agri plugin - Profiles
+##--------------------------------
+plugin:
+  _default: Utenti PA
+
+  profiles:
+    Utenti PA:
+       config: config_pa.yaml
+       
+    Utenti privati:
+       config: config_ut.yaml
+  
+    Utenti privati test O19:
+       config: config_up_019.yaml
+       
+    Utenti PA test O19:
+       config: config_ut_o19.yaml
+       
+    Utenti privati test REF:
+       config: config_test.yaml
+       
+    Utenti privati test 11COL:
+       config: config_test_col.yaml
+       
+    Utenti PA test REF:
+       config: config_test_pa_ref.yaml

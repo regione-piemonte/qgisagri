@@ -1,0 +1,80 @@
+##--------------------------------
+## QGIS Agri plugin - Utenti test
+##--------------------------------
+includes: [ config.yaml ]
+
+##---------------------------
+## Context settings
+##---------------------------
+context:
+   display: 
+     plugin_title: "QGIS Agri TEST - DB O19 - ACCESSO PRIVATI"
+
+
+##---------------------------
+## Roles settings
+##---------------------------
+roles:
+   QGISAGRI@AGRICOLTURA$$01:
+      functionalities:
+         1011:
+           enabled: true
+
+
+##---------------------------
+## Agri services settings
+##---------------------------
+agri_service:
+   host: "https://<HOSTNAME>/agriapi/json/layer/2.0/"
+           
+   resources:   
+      BrowseDocumentazione:
+        browserUrl: "{host}/agriapi/agriwellweb/redirect?token={token}"
+        
+      BrowseContraddizioni:
+        browserUrl: "{host}/agriapi/agriwellweb/redirect?token={token}"
+
+##---------------------------
+## Sfondi settings
+##---------------------------        
+WMS:
+   layers:
+          
+      Ortofoto AGEA 2012:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2012&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+      
+      Ortofoto AGEA 2015:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2015&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+      
+      Ortofoto AGEA 2018:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2018&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+          
+      Ortofoto AGEA 2021:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2021&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+          #url: "https://<HOSTNAME>/wmspiemonteagri/wmts/1.0.0/WMTSCapabilities.xml"
+          
+      Ortofoto VHR 2021:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_VHR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+          
+      Ortofoto sat. HR 01-02-2021:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_01-02_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+      
+      Ortofoto sat. HR 04-2021:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_04_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+      
+      Ortofoto sat. HR 05-06-2021:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_05-06_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+           
+      Ortofoto sat. HR 07-08-2021:
+        uri:
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_07-08_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+          
+          

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+	<settings defaultCache="${basedir}/build/cache" defaultResolver="urlResolver"/>
+	<resolvers>
+		<url name="urlResolver">
+			<artifact pattern=" http://repart.csi.it/java/[organisation]/[module]/[revision]/lib/[artifact].[type]" />
+			<artifact pattern=" http://repart.csi.it/java /[organisation]/[module]/[revision]/conf/[artifact].[type]" />
+			<ivy pattern=" http://repart.csi.it/java/[organisation]/[module]/[revision]/ivy-[module].xml" />
+		</url>
+	</resolvers>
+</ivysettings>

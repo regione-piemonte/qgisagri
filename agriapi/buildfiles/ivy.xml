@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="csipiemonte" module="testivy" />
+	<dependencies>
+	
+		<dependency transitive="false" org="csipiemonte" name="papuaserv-wsclient-rest"
+			rev="1.0.0">
+		</dependency>
+		<dependency transitive="false" org="json" name="json-simple" rev="1.1.1">
+			 <artifact name="json-simple-1.1.1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache" name="log4j"
+			rev="1.2.16" />
+		<dependency transitive="false" org="others" name="jboss"
+			rev="eap-6.0">
+			<artifact name="jboss-jsp-api_2.2_spec-1.0.1.Final-redhat-1"
+				type="jar" />
+			<artifact name="jboss-el-api_2.2_spec-1.0.2.Final-redhat-1"
+				type="jar" />
+			<artifact
+				name="jboss-servlet-api_3.0_spec-1.0.1.Final-redhat-1" type="jar" />
+				<artifact name="jackson-core-asl-1.9.2-redhat-1" type="jar" />
+			<artifact name="jackson-mapper-asl-1.9.2-redhat-1" type="jar" />
+			<!-- Webservice -->
+      <artifact name="cxf-api-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-common-utilities-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-bindings-soap-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-core-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-databinding-jaxb-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-frontend-jaxws-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-frontend-simple-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-transports-http-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-rt-ws-addr-2.4.6-redhat-1" type="jar" />
+      <artifact name="cxf-tools-common-2.4.6-redhat-1" type="jar" />
+      <artifact name="neethi-3.0.1-redhat-1" type="jar" />
+      <artifact name="xmlschema-core-2.0.2-redhat-1" type="jar" />
+      <artifact name="wsdl4j-1.6.2-redhat-1" type="jar" />
+	  
+		</dependency>
+		
+		<dependency transitive="false" org="others"
+			name="aopalliance" rev="1.0">
+		</dependency>
+		<dependency transitive="false" org="others" name="spring"
+			rev="4.1.3.RELEASE">
+			<artifact name="spring-aop-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-beans-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-context-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-context-support-4.1.3.RELEASE"
+				type="jar" />
+			<artifact name="spring-core-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-expression-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-jdbc-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-orm-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-tx-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-web-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-webmvc-4.1.3.RELEASE" type="jar" />
+			<artifact name="spring-test-4.1.3.RELEASE" type="jar" />
+		</dependency>
+		
+		
+		<dependency transitive="false" org="apache" name="commons-io" rev="2.2" />
+		<dependency transitive="false" org="apache"	name="commons-httpclient" rev="3.1" />
+		<dependency transitive="false" org="apache"	name="commons-codec" rev="1.7" />
+		<dependency transitive="false" org="apache"	name="commons-logging" rev="1.1">
+			<artifact name="commons-logging-1.1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache"	name="commons-collections" rev="3.2.2">
+			<artifact name="commons-collections-3.2.2" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache"	name="commons-dbcp" rev="1.4">
+			<artifact name="commons-dbcp-1.4" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache"	name="commons-lang3" rev="3.9">
+			<artifact name="commons-lang3-3.9" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="apache"	name="commons-pool" rev="1.5.4">
+			<artifact name="commons-pool-1.5.4" type="jar" />
+		</dependency>
+		
+		<dependency org="sun" name="jai" rev="1.1.3">
+			<artifact name="jai-core-1.1.3" ext="jar" />
+		</dependency>
+		
+		<dependency org="archibus" name="archibus" rev="23.2">
+			<artifact name="jsr311-api-1.1.1" ext="jar" />
+		</dependency>
+		<dependency org="csipiemonte" name="jts" rev="1.16.1">
+			<artifact name="jts-core-1.16.1" ext="jar" />
+		</dependency>
+		<dependency org="csipiemonte" name="celiachia-bdf-dependencies" rev="1.0.0">
+			<artifact name="postgresql-42.2.5" ext="jar" />
+		</dependency>
+		
+		<dependency transitive="false" org="redhat"
+			name="resteasy-jaxb-provider" rev="2.3.10.Final-redhat-1" />
+		<dependency org="jboss" name="jaxrs-api" rev="3.0.7.Final">
+			<artifact name="jaxrs-api-3.0.7.Final" ext="jar" />
+		</dependency>
+		<dependency transitive="false" org="oracle" name="jdbc"
+			rev="11.2.0.3.0" />
+		<dependency transitive="false" org="csipiemonte"
+			name="iridev2" rev="2.0.0">
+			<artifact name="iridev2-pep-intf-2.0.0" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="csipiemonte" name="csi"
+			rev="1.4.6">
+			<artifact name="csi-stadapter-1.4.6" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="csipiemonte"
+			name="shibboleth" rev="1.0.0" />
+			
+			
+		<dependency transitive="false" org="others"	name="ejml" rev="0.34">
+			<artifact name="ejml-core-0.34" type="jar" />
+			<artifact name="ejml-ddense-0.34" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="others"	name="GeographicLib" rev="1.49">
+			<artifact name="GeographicLib-Java-1.49" type="jar" />
+		</dependency>		
+		<dependency transitive="false" org="others"	name="geotools" rev="21.2">
+			<artifact name="gt-cql-21.2" type="jar" />
+			<artifact name="gt-epsg-hsql-21.2" type="jar" />
+			<artifact name="gt-geojson-21.2" type="jar" />
+			<artifact name="gt-jdbc-21.2" type="jar" />
+			<artifact name="gt-jdbc-postgis-21.2" type="jar" />
+			<artifact name="gt-main-21.2" type="jar" />
+			<artifact name="gt-metadata-21.2" type="jar" />
+			<artifact name="gt-opengis-21.2" type="jar" />
+			<artifact name="gt-referencing-21.2" type="jar" />
+			<artifact name="gt-xml-21.2" type="jar" />
+			<artifact name="gt-geopkg-21.2" type="jar" />
+
+		</dependency>	
+		<dependency transitive="false" org="others"	name="hsqldb" rev="2.4.1">
+			<artifact name="hsqldb-2.4.1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="csipiemonte" name="siapcommws-client" rev="3.5.0" >
+			<artifact name="siapcommws-client-3.5.0" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="codehaus"	name="jackson-jaxrs" rev="1.9.13">
+			<artifact name="jackson-jaxrs-1.9.13" type="jar" />
+		</dependency>	
+		<dependency transitive="false" org="others"	name="jgridshift" rev="1.0">
+			<artifact name="jgridshift-1.0" type="jar" />
+		</dependency>	
+		<dependency transitive="false" org="locationtech"	name="jts" rev="1.16.1">
+			<artifact name="jts-io-common-1.16.1" type="jar" />
+		</dependency>	
+		
+		<dependency transitive="false" org="apache"	name="xml-commons" rev="1.2">
+			<artifact name="xml-commons-resolver-1.2" type="jar" />
+		</dependency>
+		
+		<dependency transitive="false" org="unitsofmeasurement"	name="si-units" rev="0.7.1">
+			<artifact name="si-quantity-0.7.1" type="jar" />
+			<artifact name="si-units-java8-0.7.1" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="unitsofmeasurement"	name="uom-systems" rev="0.7.2">
+			<artifact name="systems-common-java8-0.7.2" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="unitsofmeasurement"	name="unit-api" rev="1.0">
+			<artifact name="unit-api-1.0" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="unitsofmeasurement"	name="uom-se" rev="1.0.8">
+			<artifact name="uom-se-1.0.8" type="jar" />
+		</dependency>
+		<dependency transitive="false" org="unitsofmeasurement"	name="uom-lib" rev="1.0.2">
+			<artifact name="uom-lib-common-1.0.2" type="jar" />
+		</dependency>	
+		
+		<!-- Usata solo a runtime -->
+		<dependency transitive="false" org="xerial"	name="sqlite-jdbc" rev="3.32.3.2">
+			<artifact name="sqlite-jdbc-3.32.3.2" type="jar" />
+		</dependency>
+
+	  
+
+
+		<conflict org="others" module="jboss" manager="all" />
+
+	</dependencies>
+</ivy-module>

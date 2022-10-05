@@ -1,0 +1,92 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://smrcomm.business.siapcommws.smrcomms.csi.it/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://smrcomm.interfacews.siapcommws.smrcomms.csi.it/" name="SmrcommSrvService" targetNamespace="http://smrcomm.business.siapcommws.smrcomms.csi.it/">
+<wsdl:import location="http://<HOSTNAME>/siapcommwsApplSmrcommWs/SmrcommSrvService?wsdl=Smrcomm.wsdl" namespace="http://smrcomm.interfacews.siapcommws.smrcomms.csi.it/"></wsdl:import>
+<wsdl:binding name="SmrcommSrvServiceSoapBinding" type="ns1:Smrcomm">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="invioPostaCertificata">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="invioPostaCertificata">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="invioPostaCertificataResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnrecoverableException">
+<soap:fault name="UnrecoverableException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="InvalidParameterException">
+<soap:fault name="InvalidParameterException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="MailSystemException">
+<soap:fault name="MailSystemException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="leggiFileDocumento">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="leggiFileDocumento">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="leggiFileDocumentoResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnrecoverableException">
+<soap:fault name="UnrecoverableException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="InvalidParameterException">
+<soap:fault name="InvalidParameterException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="ProtocollaSystemException">
+<soap:fault name="ProtocollaSystemException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="testResources">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="testResources">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="testResourcesResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnrecoverableException">
+<soap:fault name="UnrecoverableException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="InvalidParameterException">
+<soap:fault name="InvalidParameterException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="archiviaProtocollaDocumento">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="archiviaProtocollaDocumento">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="archiviaProtocollaDocumentoResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="UnrecoverableException">
+<soap:fault name="UnrecoverableException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="InvalidParameterException">
+<soap:fault name="InvalidParameterException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="ProtocollaSystemException">
+<soap:fault name="ProtocollaSystemException" use="literal"/>
+</wsdl:fault>
+<wsdl:fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="SmrcommSrvService">
+<wsdl:port binding="tns:SmrcommSrvServiceSoapBinding" name="SmrcommSrvPort">
+<soap:address location="/siapcommwsApplSmrcommWs/SmrcommSrv"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

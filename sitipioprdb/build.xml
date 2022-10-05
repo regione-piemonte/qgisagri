@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="QGISAGRI - Script creazione db" default="all-target">
+  <description>Build file del componente</description>
+
+  <property file="buildfiles/build.properties"/>
+
+  <target name="all-target" description="Lancia il build per le varie distribuzioni in sequenza">
+    <antcall target="distribution">
+      <param name="target" value="coll-${linea.cliente}-${istanza.cliente}"/>
+    </antcall>
+    <antcall target="distribution">
+      <param name="target" value="prod-${linea.cliente}-${istanza.cliente}"/>
+    </antcall>
+  </target>
+
+  <target name="distribution" >		
+
+    <delete dir="${dir.build}/temp" />
+    <mkdir dir="${dir.build}/temp" />
+
+    <delete dir="${dir.dist}/${target}" />  
+    <mkdir dir="${dir.dist}/${target}" />
+
+    <copy todir="${dir.build}/temp">
+      <fileset file="${dir.src}/incr/${versione}/${user}.sql">
+      </fileset>  
+    </copy>
+
+	<concat destfile="${dir.build}/temp/${user}.sql" append="true" fixlastline="true">
+			<filelist dir="buildfiles" files="comandi_sqlplus"/>
+	</concat>
+
+
+	  <fixcrlf srcdir="${dir.build}/temp/" eol="unix" includes="**" /> <!--converte in formato unix -->	    			 
+	  <zip destfile = "${dir.dist}/${target}/${user}-${versione}.zip" basedir="${dir.build}/temp" update="true" includes="**/${user}*.sql" whenempty="create"/>
+	
+
+    <delete dir="${dir.build}/temp" />
+    <delete dir="${dir.build}" />		    
+
+	</target>
+
+  <target name="clean-all" description="Rimuove le cartelle temporanee." depends="clean-dist, clean-temp"/>
+
+  <target name="clean-temp" description="Rimuove la cartella dei files temporanei di build.">
+    <delete dir="${dir.build}/temp" />
+  </target>
+
+  <target name="clean-dist" description="Rimuove la cartella delle distribuzioni.">
+    <delete dir="${dir.dist}"/>
+  </target>
+
+</project>

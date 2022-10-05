@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ruoli</title>
+
+<style>
+body,
+input {
+  font-family: "{{ font_family }}";
+  font-size: {{ font_point_size }}pt;
+  font-weight: 75;
+}
+form {
+  white-space: nowrap;
+  /*overflow-x: auto;*/
+}
+</style>
+</head>
+
+<body>
+
+<form method="post" onsubmit="return ValidateRoleForm();">
+    <fieldset>
+    <legend>Scelta ruolo</legend>
+    
+    {% for role in roles %}
+    	{% if role.codice %}
+	    	<input type="radio" name="ruoli_agri" id={{ role.codice }} value={{ role.codice }} onclick="handleRoleClick(this);">
+	    	<label for={{ role.codice }}>{{ role.descrizione|e }}</label><br>
+    	{% endif %}
+	{% endfor %}
+	
+	<br>
+    <input type="submit" id="role_confirm" value="Conferma" style="font-family: 'Arial Black' !important;" disabled>
+    </fieldset>
+</form>
+
+<script type="text/javascript">
+function handleRoleClick(radio) 
+{
+	var btn = document.getElementById( "role_confirm" );
+    if (btn) 
+    {
+    	btn.disabled = false;
+    }
+}
+
+function ValidateRoleForm() 
+{
+    var radioButtons = document.getElementsByName( "ruoli_agri" );
+    for(var i = 0; i < radioButtons.length; i++)
+    {
+    	var radioButton = radioButtons[i] 
+        if (radioButton.checked === true)
+        {
+        	pyroleapi.set_selected_role( radioButton.value );
+        	return false;
+        }
+    }
+    return false;
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+/*
+ * custom.css
+ * ~~~~~~~~~~~~~
+ *
+ * QGIS Agri stylesheet.
+ *
+ */
+
+/*
+@import '../default.css';
+*/
+
+/*
+html,body {
+	height: 100%
+}
+*/
+
+/* -- general body styles --------------------------------------------------- */
+
+
+div.body {
+	max-width: none !important;
+	margin-right: 50px;
+}
+
+
+div.document {
+	background-color: none !important;
+}
+
+div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(4) {
+    display: none;
+}

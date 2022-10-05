@@ -1,0 +1,108 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - geographic-information-systems
+dependsOn:
+  open:
+    - name: Redhat JBOSS
+      optional: false
+      version: 6.4 EAP
+      versionMax: ''
+      versionMin: ''
+  proprietary:
+    - name: Oracle Database
+      optional: false
+      version: 11g
+      versionMax: 19c
+      versionMin: 11g
+description:
+  it:
+    features:
+      - Autenticazione e profilazione utente
+      - Accesso alla lista di lavorazione
+      - Visualizzazione dei suoli proposti dal richiedente
+      - Attribuzione del codice di uso del suolo al poligono del suolo
+      - |-
+        Storicizzazione dati di suoli e particelle e possibilità di editare
+        anche i dati storicizzati
+      - |-
+        Visualizzazione e archiviazione immagini georiferite e documentazione
+        caricata dal richiedente
+      - Selezione di una particella in base agli identificativi catastali
+      - Eliminazione logica di una particella
+      - |-
+        Registrazione dell’associazione tra oggetto modificato e utente che ha
+        fatto la modifica
+      - Controllo della correttezza formale delle geometrie
+      - Ottimizzazione della gestione dei poligoni disgiunti
+      - |-
+        Funzionalità di "undo" per annullare modifiche su geometrie o
+        georeferenziazione su un'immagine
+      - Gestione della sessione di lavoro locale
+    genericName: Aggiornamento GIS del SIAP
+    localisedName: QGISAGRI
+    longDescription: |
+      Il sistema permette la fotointerpretazione del territorio a seguito di
+      richiesta di un utente che presenta un'istanza di lavorazione, corredata
+      da un poligono di uso del suolo richiesto ed, eventualmente, di foto
+      georiferite e di altra documentazione a supporto, nei casi previsti.
+      Esiste anche la possibilità di aggiornare lo strato catastale del GIS del
+      SIAP, cessando logicamente le particelle cessate e disegnando le nuove
+      particelle con il supporto dei CXF dell'Agenzia delle Entrate e della
+      documentazione caricata dal richiedente. L'attività viene effettuata
+      mediante un plugin per il software QGIS (QGISAGRIPLG), supportato da
+      un'API per la gestione dell'autenticazione utente, della profilazione
+      utente e dell'accesso alla base dati (AGRIAPI).
+
+
+      Fa parte del sistema anche il modulo OGCPROXYAGRI, che fornisce l'accesso
+      autenticato ad un map service per le ortofoto di sfondo su cui eseguire le
+      operazioni di fotointerpretazione. Il map service richiamato da questo
+      modulo non fa parte di questo progetto.
+    shortDescription: |-
+      Il sistema permette l'aggiornamento del GIS del SIAP (Sistema Informativo
+      Agricolo Piemontese)
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: true
+    pagopa: false
+    spid: true
+  riuso:
+    codiceIPA: r_piemon
+legal:
+  license: GPL-2.0-only
+  mainCopyrightOwner: Regione Piemonte
+  repoOwner: Regione Piemonte
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+maintenance:
+  contacts:
+    - email: michele.pianta@csi.it
+      name: Michele Pianta'
+  type: community
+name: QGISAGRI
+platforms:
+  - windows
+  - mac
+  - linux
+  - android
+  - ios
+releaseDate: '2022-07-26'
+softwareType: standalone/desktop
+softwareVersion: 1.13.0
+url: 'https://github.com/regione-piemonte/qgisagri'
+usedBy:
+  - Regione Piemonte

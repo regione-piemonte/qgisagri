@@ -1,0 +1,18 @@
+ log4j.rootCategory = ALL, ogcproxy
+ 
+ # Logger del caricamento dei dati censuari
+ log4j.logger.it.csi.proxy.ogcproxy = ALL, ogcproxy
+ 
+ log4j.appender.ogcproxy=org.apache.log4j.ConsoleAppender
+ log4j.appender.ogcproxy.Target=System.out
+ log4j.appender.ogcproxy.layout=org.apache.log4j.PatternLayout
+ log4j.appender.ogcproxy.layout.ConversionPattern= %d %-5p [%l] %x - %m%n@
+ 
+ 
+ log4j.logger.org.apache.http = ERROR, httpclient
+ 
+ log4j.appender.httpclient=org.apache.log4j.ConsoleAppender
+ log4j.appender.httpclient.Target=System.out
+ log4j.appender.httpclient.layout=org.apache.log4j.PatternLayout
+ log4j.appender.httpclient.layout.ConversionPattern= %d %-5p [%l] %x - %m%n@
+ 

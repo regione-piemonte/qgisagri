@@ -1,0 +1,2311 @@
+##--------------------------------
+## QGIS Agri plugin - Settings
+##--------------------------------
+plugin: QGISAgri
+
+
+##---------------------------
+## Proxy settings - Not used
+##---------------------------
+proxy:
+   type: "HttpProxy"
+   hostname: "<HOSTNAME>"
+   port: 3128
+
+
+##---------------------------
+## Context settings
+##---------------------------
+context:
+   qgisProjectionSettings:
+      - key: "EPSG:4326\\EPSG:3003_srcTransform"
+        value: ""
+      - key: "EPSG:4326\\EPSG:3003_destTransform"
+        value: ""
+      - key: "EPSG:4326\\EPSG:3003_coordinateOp"
+        value: "+proj=pipeline +step +proj=unitconvert +xy_in=deg +xy_out=rad +step +proj=push +v_3 +step +proj=cart +ellps=WGS84 +step +inv +proj=helmert +x=-104.1 +y=-49.1 +z=-9.9 +rx=0.971 +ry=-2.917 +rz=0.714 +s=-11.68 +convention=position_vector +step +inv +proj=cart +ellps=intl +step +proj=pop +v_3 +step +proj=tmerc +lat_0=0 +lon_0=9 +k=0.9996 +x_0=1500000 +y_0=0 +ellps=intl"
+      - key: "EPSG:4326\\EPSG:3003_allowFallback"
+        value: "true"
+        
+      - key: "EPSG:32632\\EPSG:3003_srcTransform"
+        value: ""
+      - key: "EPSG:32632\\EPSG:3003_destTransform"
+        value: ""
+      - key: "EPSG:32632\\EPSG:3003_coordinateOp"
+        value: "+proj=pipeline +step +inv +proj=utm +zone=32 +ellps=WGS84 +step +proj=push +v_3 +step +proj=cart +ellps=WGS84 +step +inv +proj=helmert +x=-104.1 +y=-49.1 +z=-9.9 +rx=0.971 +ry=-2.917 +rz=0.714 +s=-11.68 +convention=position_vector +step +inv +proj=cart +ellps=intl +step +proj=pop +v_3 +step +proj=tmerc +lat_0=0 +lon_0=9 +k=0.9996 +x_0=1500000 +y_0=0 +ellps=intl"
+      - key: "EPSG:32632\\EPSG:3003_allowFallback"
+        value: "true"
+      - key: ""
+        value: ""
+   
+   useClientCentificate: false
+   
+   enableProcessGuard: true
+   
+   updateTocCounter: true
+   
+   display: 
+     numOfDigits: 3
+     plugin_title: "QGIS Agri"
+   
+   sfondoDefault:
+     seachForAttribute: "loadOnInit"
+     
+   toolbarShadow:
+     enable: false
+     
+   snapOnStart: true
+   
+   snapping:
+     enabled: true
+     type: "Vertex"
+#      units: "Pixels"
+#      tolerance: 20
+     units: "LayerUnits"
+     tolerance: 0.5
+     intersectionSnapping: false
+     mode: "AllLayers"
+     topological:
+       enable: true
+       
+   canvas:
+     style: "border: 3px solid lime"
+   
+   suolo:
+     id:
+       fieldValue: "idFeature"
+       
+     idParent:
+       fieldValue: "idFeaturePadre"
+       
+     eleggibilita:
+       table: "ClassiEleggibilita"
+       fieldValue: "codiceEleggibilitaRilevata"
+       fieldDesc: "descEleggibilitaRilevata"
+       fieldAssign: "flagAssegnabileQgis"
+       fieldAssignValue: "S"
+       
+     lavorato:
+       fieldValue: "flagLavorato"
+       fieldAssignValue: 1
+       checkLayers:
+         suoli_lavorazione:
+            fieldLavValues:
+               - "LAV"
+            fieldErrValues: 
+               - "LAV_KO"
+               - "COND_KO"
+               
+         suoli_noconduzione_corrotti:
+            fieldLavValues:
+               - "KO"
+            fieldErrValues: 
+               - "KO"
+
+     sospeso:
+       fieldValue: "flagSospensione"
+       fieldAssignValue: 1
+       checkLayers:
+         suoli_lavorazione:
+            fieldLavValues: [ LAV, LAV_KO, COND, COND_KO ]
+          
+         suoli_noconduzione_corrotti:
+            fieldLavValues: []
+ 
+
+     sospensione:
+       table: "MotivoSospensione"
+       fieldValue: "idTipoMotivoSospensione"
+       fieldDesc: "descrizione"
+       
+     type:
+       fieldValue: "tipoSuolo"
+       layers:
+         suoli_lavorazione:
+            fieldValues: 
+               - "LAV"
+               - "LAV_KO"
+               - "COND"
+               - "COND_KO"
+               
+         suoli_noconduzione_corrotti:
+            fieldValues: 
+               - "KO"
+               
+   particella:
+     id:
+       fieldValue: "idFeature"
+     
+     mappale:
+       fieldValue: "numeroParticella"
+       fieldSubValue: "subalterno"
+     
+     lavorato:
+       fieldValue: "flagLavorato"
+       fieldAssignValue: 1
+       
+     guiColor: "#FFFACD"
+
+   identifydlg:
+     fields:
+       codiceEleggibilitaRilevata:
+         name: "codiceEleggibilitaRilevata"
+         
+       note:
+         name: "note"
+         
+       noteLavorazione:
+         name: "noteLavorazione"
+         
+       descrizioneSospensione:
+         name: "descrizioneSospensione"
+         
+       flagSospensione:
+         name: "flagSospensione"
+         
+       flagLavorato:
+         name: "flagLavorato"
+         default: 1
+         
+       flagControlloCampo:
+         name: "flagControlloCampo"
+         
+       idTipoMotivoSospensione:
+         name: "idTipoMotivoSospensione"
+         
+       cessato:
+         name: "cessato"
+   
+   controlbox:
+     exportGrid: true
+     
+     services:
+        listaLavorazione:
+          name: "ListaLavorazione"
+          annoField: "campagna"
+          idTipoLista: "idTipoLista"
+          idTipoListaParticella: 1
+        
+        aziende:
+          name: "ElencoAziende"
+          idEvLavField: "idEventoLavorazione"
+        
+        fogliAzienda:
+          name: "ElencoFogliAzienda"
+          selectedField: "_selected"
+          statoField: "_statoLavorazione"
+          docFlagField: "isDocumentoPresente"
+          statoFieldDone: 100
+          statoFieldReject: 999
+          
+        fogliAziendaOffline:
+          name: "ElencoFogliAziendaOffline"
+          codNazionaleField: "codiceNazionale"
+          sezioneField: "sezione"
+          foglioField: "foglio"
+          statoFieldEdit: "_statoLavorazioneEdit"
+          statoPartFieldEdit: "_statoLavorazionePartEdit"
+          comuneField: "descrizioneComune"
+          statoFieldEditDone: 100
+          
+        SuoliLavorazioneOffline:
+          name: "SuoliLavorazioneOffline"
+          featureIdField: "idFeature"
+          featureIdFieldPadre: "idFeaturePadre"
+          suoliInLavorazioneFilter: "tipoSuolo in ('LAV','LAV_KO','COND_KO')"
+          
+        ParticelleLavorazioni:
+          name: "ParticelleLavorazioni"
+          view: "ParticelleLavorazioni_v"
+          id: "idParticellaLavorazione"
+          idEventoLavField: "idEventoLavorazione"
+          idParticellaLavorazione: "idParticellaLavorazione"
+          codNazionaleField: "codiceNazionale"
+          foglioField: "foglio"
+          numParticellaField: "numeroParticella"
+          subalternoField: "subalterno"
+          descSospensioneField: "descrizioneSospensione"
+          numParticellaCxfField: "particella"
+          hasGeometryField: "_has_geometry"
+          flagCxfField: "flagPresenzaCxf"
+          flagAllegatiField: "flagPresenzaAllegati"
+          flagSospensioneField: "flagSospensione"
+          statoLavPartField: "_statoLavorazionePart"
+          flagFieldTrueValue: "S"
+          flagFieldFalseValue: "N"
+          statoLavPartSuspendItemValue: 33
+          
+##---------------------------
+## Commands settings
+##---------------------------     
+commands:
+   
+   suoliCondParticella:
+      filterExpression: "flagConduzione = 'S'"
+      filterLavExpression: "flagLavorato = 1"
+      wrkFields:
+        - name: "idFeaturePadre"
+        - name: "idEleggibilitaRilevata"
+        - name: "codiceEleggibilitaRilevata"
+        - name: "codiceNazionale"
+        - name: "foglio"
+        - name: "flagLavorato"
+        - name: "flagSospensione"
+        - name: "modificato"
+        - name: "cessato"
+        - name: "descrizioneSospensione"
+        - name: "note"
+        - name: "noteLavorazione"    
+
+      layers:
+        suoli_lavorazione:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "LAV"
+              
+        suoli_noconduzione_corrotti:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "KO"
+   
+   importProjectLayers:
+      tocgroup: "ALTRO"
+         
+   storico:
+      yearField:
+        name: "annoCampagna"
+
+      dateField:
+        name: "dataInizioValidita"
+        format: "%d/%m/%Y"
+
+      dateEndField:
+        name: "dataFineValidita"
+        format: "%d/%m/%Y"
+
+   preparedb:
+      wrkFields:
+        - name: "idFeaturePadre"
+        - name: "cessato"
+
+          
+   cloneParticellaCxf:
+      wrkFields:
+        - name: "particella"
+          destname: "numeroParticella"
+        
+        - name: "subalterno"
+        
+        - name: "flagConduzione"
+          default: "S"
+          
+        - name: "flagCessato"
+          default: 0
+          
+        - name: "flagLavorato"
+          default: 1
+          
+        - name: "flagSospensione"
+          default: 0
+          
+        - name: "_flagInvalido"
+          default: 0
+          
+        - name: "descrizioneSospensione"
+          default: ""
+   
+   cloneSuoloParticella:
+      wrkFields:
+        - name: "numeroParticella"
+        
+        - name: "subalterno"
+        
+        - name: "flagConduzione"
+          default: "S"
+          
+        - name: "flagCessato"
+          default: 0
+          
+        - name: "flagLavorato"
+          default: 1
+          
+        - name: "flagSospensione"
+          default: 0
+          
+        - name: "_flagInvalido"
+          default: 0
+          
+        - name: "descrizioneSospensione"
+          default: ""
+          
+   cloneParticellaSuolo:
+      condFilter: "flagConduzione = 'S'"
+   
+      layers:
+        suoli_lavorazione:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "LAV"
+              skipValorized: true
+              
+        suoli_noconduzione_corrotti:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "KO"
+              skipValorized: true
+              
+      wrkFields:
+        - tipoSuolo:
+           destname: "tipoSuolo"
+           default: "LAV"
+           
+        - cessato:
+           default: 0
+        - flagLavorato:
+           default: 1
+        - flagSospensione:
+           default: 0
+   
+          
+   updateFlagSuolo:
+      layers:
+        suoli_lavorazione:
+          layFilter: "tipoSuolo != 'NO_COND' and tipoSuolo != 'KO'"
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "LAV"
+              skipValorized: true
+              
+        suoli_noconduzione_corrotti:
+          layFilter: "tipoSuolo = 'KO'"
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "KO"
+              skipValorized: true
+              
+      wrkFields:
+        - name: "OGC_FID"
+          keyField: true
+          
+        - name: "flagLavorato"
+          setValue: 1
+          skippable: true
+          reset:
+            keyValue: -1
+            setValue: 0
+          
+        - name: "noteLavorazione"
+          
+        - name: "cessato"
+          setValue: 0
+          
+        - name: "modificato"
+          setValue: 0
+          
+        - name: "flagSospensione"
+          setValue: 0
+          skipValorized: true
+          
+        - name: "_flagInvalido"
+          refName: "_flagInvalido"
+          setValue: 0
+          
+   updateFlagParticella:
+      wrkFields:
+        - name: "OGC_FID"
+          keyField: true
+          
+        - name: "flagCessato"
+          setValue: 0
+          
+        - name: "flagLavorato"
+          setValue: 1
+          
+        - name: "flagSospensione"
+          setValue: 0
+          skipValorized: true
+          
+        - name: "_flagInvalido"
+          refName: "_flagInvalido"
+          setValue: 0
+          
+   suspendsuolo:
+      wrkFields:
+        - name: "flagSospensione"
+          setValue: 1
+          
+        - name: "descrizioneSospensione"
+          
+   confirmproposti:
+      filterExpression: "flagSospensione != 1"
+      overlapLayers: 
+        particelle_catastali:
+          filter: "flagConduzione = 'S'"
+   
+      wrkFields:
+        - name: "codiceEleggibilitaRilevata"
+        - name: "_propostoRefId"
+          from: "OGC_FID"
+          type: "INT"
+      setFields:      
+        - name: "idFeature"
+          value: null
+        - name: "idEleggibilitaRilevata"
+          value: null
+   
+   repairsuolo:
+        wrkFields:
+            - name: "idFeature"
+              setValue:
+              
+   repairParticelle:
+        wrkFields:
+            - name: "idFeature"
+              setValue:
+   
+   dissolvesuoli:
+        wrkFields:
+            - name: "idFeature"
+              setValue:
+   
+   dissolveParticelle:
+        wrkFields:
+            - name: "idFeature"
+              setValue:
+   
+   fillsuoli:
+        layers:
+        suoli_lavorazione:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "LAV"
+              skipValorized: true
+              
+        suoli_noconduzione_corrotti:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "KO"
+              skipValorized: true
+              
+        wrkFields:
+            - name: "id"
+              setValue:
+            - name: "idFeature"
+              setValue:
+            - name: "codiceEleggibilitaRilevata"
+              setValue: ''
+   
+   fillParticelle:
+        wrkFields:
+            - name: "id"
+              setValue:
+            - name: "idFeature"
+              setValue:
+            - name: "numeroParticella"
+              setValue: ''
+              notNull: true
+              zeroFill: 5
+            - name: "subalterno"
+              setValue: ''
+            - name: "flagConduzione"
+              setValue: 'S'
+            - name: "flagSospensione"
+              setValue: 0         
+          
+   splitsuoli:
+        wrkFields:
+            - name: "OGC_FID"
+              setValue:
+            - name: "idFeature"
+              setValue: 
+#       layers:
+#         suoli_lavorazione:
+#           wrkFields:
+#             - name: "idFeature"
+#               setValue: 
+#             - name: "tipoSuolo"
+#               setValue: "LAV"    DO NOT CHANGE TIPOSUOLO VALUE!!
+#               skipValorized: true
+#               
+#         suoli_noconduzione_corrotti:
+#           wrkFields:
+#             - name: "idFeature"
+#               setValue: 
+#             - name: "tipoSuolo"
+#               setValue: "KO"
+#               skipValorized: true
+   
+   splitParticelle:
+        wrkFields:
+            - name: "OGC_FID"
+              setValue:
+            - name: "idFeature"
+              setValue: 
+     
+   drawpolygon:
+      layers:
+        suoli_lavorazione:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "LAV"
+              skipValorized: true
+              
+        suoli_noconduzione_corrotti:
+          wrkFields:
+            - name: "tipoSuolo"
+              setValue: "KO"
+              skipValorized: true
+              
+   scaricasuoli:
+      idEventoLavField: "idEventoLavorazione"
+      idTipoLista: "idTipoLista"
+      idTipoListaParticella: 1
+          
+   salvasuoli:
+      eraseTempFile: true
+   
+      padreRelation:
+         srcLayer: "suoli_rilevati"
+         noCondLayer: "suoli_noconduzione_corrotti"
+         srcField: "idFeature"
+         dstField: "idFeaturePadre"
+         chkField: "codiceEleggibilitaRilevata"
+         modField: "modificato"
+         lavField: "flagLavorato"
+         sspField: "flagSospensione"
+         layValueNoCond: "KO"
+         modValue: 1
+         
+      errorLayer:
+         name: "salvaSuoli"
+         
+      suoliLavorazione:
+         suoli_lavorazione:
+            checkIfEmpty: true
+            suoliFilter: "tipoSuolo IN ('LAV','LAV_KO','COND','COND_KO') AND cessato != 1 AND (flagLavorato = 1 OR flagSospensione = 1 OR modificato = 1)"
+            particelleFilter: "flagConduzione = 'S' AND flagCessato != 1"
+            
+         suoli_noconduzione_corrotti:
+            checkIfEmpty: false
+#            onlyBaseAttribute: true
+            suoliFilter: "tipoSuolo = 'KO' AND cessato != 1 AND (flagLavorato = 1 OR flagSospensione = 1 OR modificato = 1)"
+            particelleFilter: "flagConduzione != 'S' AND flagCessato != 1"
+            
+      suoliParticella:
+         name: "suoli_particelle"
+         
+      checkFields:
+         idFeature:
+            nullable: true
+         
+         idFeaturePadre:
+            nullable: true
+            
+         tipoSuolo:
+         
+         codiceEleggibilitaRilevata:
+         
+         flagLavorato:
+            values:
+               - 0 
+               - 1
+               
+         flagSospensione:
+            nullValue: 0
+            values:
+               - 0 
+               - 1
+         
+         cessato:
+            nullValue: 0
+            filter: "COALESCE(cessato,0) = 1"
+            values:
+               - 0 
+               - 1
+               
+      checkParticelleFields:
+         OGC_FID:
+            filter: "NOT(COALESCE(flagCessato,0) = 1) AND flagLavorato = 1"
+         
+         idFeature:
+            nullable: true
+         
+         numeroParticella:
+            notEmpty: true
+         
+         flagConduzione:
+            values:
+               - "S" 
+               - "N"
+               
+         flagCessato:
+            nullValue: 0
+            filter: "COALESCE(flagCessato,0) = 1"
+            values:
+               - 0 
+               - 1
+               
+         flagLavorato:
+            values:
+               - 0 
+               - 1
+               
+         flagSospensione:
+            nullValue: 0
+            values:
+               - 0 
+               - 1
+      
+   scaricaDatiSuolo:
+      idKeyField: "OGC_FID"
+      idField: "idFeature"
+      idFieldPadre: "idFeaturePadre"
+      services:
+        - LeggiDatiSuolo
+        - LeggiDatiUtilizzoParticella
+        - LeggiDatiUnarPoligono
+        - LeggiDatiUnarParticella
+   
+   scaricaDatiParticella:
+      idKeyField: "OGC_FID"
+      idField: "idFeature"
+      numero: "numeroParticella"
+      subalterno: "subalterno"
+      services:
+        - LeggiDatiUtilizzoCatasto 
+        - LeggiDatiUnarCatasto
+        
+   scaricaDatiPCG:
+      idKeyField: "OGC_FID"
+      
+   scaricaDatiCXF:
+      idKeyField: "OGC_FID"
+        
+   browseDocProposti:
+      idField: "idIstanzaRiesame"
+      
+   browsePhotoProposti:
+      idField: "idFotoAppezzamento"
+      selMMTolerance: 2.4
+      useInternalViewer: true
+      
+   browseAllegatiParticelle:
+      idField: "idAllegato"
+      logicNameField: "nomeLogico"
+      fileNameField: "nomeFisico"
+      useInternalViewer: true
+   
+   checkSuoli:
+      addErrorLayer: false
+      checks:
+        suoliOverlaps:
+          filterWarnExprNoCond: "tipoSuolo = 'NO_COND' OR tipoSuolo_2 = 'NO_COND'"
+          
+      
+
+##---------------------------
+## Roles settings
+##---------------------------
+roles:
+   TEMP_ADMIN:
+      functionalities:
+         1011:
+           enabled: true
+
+
+##---------------------------
+## Agri services settings
+##---------------------------
+agri_service:
+   host: "https://<HOSTNAME>/agriapi/json/layer/2.0/"
+   proxy:
+   timeout: 30000
+   cache: false
+   
+   resources:
+      Sfondi:
+        method: "GET"
+        headers:
+          Accept: "*/*"
+   
+      Autenticazione:
+        #path: "getLista"
+        path: "getRuoli"
+        redirectPath:
+        redirectParam: "target"
+        method: "GET"
+        params:
+            versionePlugin : "{versionePlugin}"
+        
+      ListaLavorazione:
+        path: "getLista"
+        method: "GET"
+        descField: "descrizione"
+        keyfields: "idListaLavorazione"
+        params:
+            codiceRuolo: "{codiceRuolo}"
+        linkService: 
+          name: "ElencoAziende"
+          params:
+            idListaLavorazione: "{idListaLavorazione}"
+            cuaa: "{cuaa}"
+            escludiLavorate: "{escludiLavorate}"
+            escludiBloccate: "{escludiBloccate}"
+            escludiSospese: "{escludiSospese}"
+          warningDtoCodes:
+            - 1000
+            
+            
+        gridFilters:
+           anno:
+             valueField: "campagna"
+             displayField: "campagna"
+           lista:
+             valueField: "codiceLista"
+             displayField: "descrizioneLista"
+           tipoLista:
+             valueField: "idTipoLista"
+             displayField: "descrizioneTipoLista"
+#              fixValue: 2
+             
+        gridColumns:
+           campagna: 
+             position: 0
+             align: "AlignHCenter"
+             text: "Anno campagna"
+             width: 100
+           
+           idTipoLista:
+             position: 1
+             align: "AlignHCenter"
+             text: "Tipo"
+             width: 50
+             mapValues:
+               "1":
+                  tag:  "Lavorazione Particelle"
+                  text: "P"
+                  tooltip: "{descrizioneTipoLista}"
+                  icon: ""
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+                  
+               "2":
+                  tag:  "Lavorazione Suoli"
+                  text: "S"
+                  tooltip: "{descrizioneTipoLista}"
+                  icon: ""
+                  
+           codiceLista: 
+             position: 2
+             text: "Codice"
+                  
+           descrizioneLista: 
+             position: 3
+             text: "Descrizione"
+             
+           descrizioneTipoLista:
+             visible: false
+             
+           idListaLavorazione: 
+             visible: false
+             
+        
+      ElencoAziende:
+        path: "getElencoAziende"
+        method: "GET"
+        descField: "denominazione"
+        keyfields: "cuaa"
+        timeout: 60000
+        timeoutError: "L'operazione di estrazione delle aziende ha richiesto troppo tempo.\nRestringere la ricerca specificando il CUAA da estrarre."
+        params:
+            idListaLavorazione: "{idListaLavorazione}"
+            cuaa: "{cuaa}"
+            escludiLavorate: "{escludiLavorate}"
+            escludiBloccate: "{escludiBloccate}"
+            escludiSospese: "{escludiSospese}"
+        linkService: 
+          name: "ElencoFogliAzienda"
+          params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+          appendParams:
+            - "idEventoLavorazione"
+            
+        warningDtoCodes:
+            - 1000
+            
+        lockFieldExpression: 
+           isAziendaBloccata: 
+             value: true
+             
+        idUtenteBloccoField: "idUtenteBlocco"
+            
+        gridFilters:
+           cuaa:
+             valueField: "cuaa"
+             displayField: "denominazione"
+             
+        gridColumns:
+           cuaa: 
+             position: 0
+             text: "CUAA"
+             
+           denominazione: 
+             position: 1
+             text: "Denominazione"
+           
+           numeroFogli: 
+             position: 2
+             text: "N. fogli"
+             
+           numeroParticelle: 
+             position: 3
+             text: "N. particelle"
+             
+           numeroSuoliLavorazione: 
+             position: 4
+             text: "N. suoli in lavorazione"
+             
+           numeroSuoliProposti: 
+             position: 5
+             text: "N. suoli proposti"
+             
+           isAziendaBloccata: 
+             position: 6
+             align: "AlignHCenter"
+             text: "Azienda presa in carico"
+             mapValues:
+               "True":
+                  text: "Sì"
+                  tag: "Si"
+                  tooltip: "Azienda presa in carico da:<br><b>{utenteBlocco}</b>"
+#                  icon: ":/plugins/qgis_agri/images/lock-icon.png"
+#                   rowBackgroundColor: "#ffcccc"
+#                  priority: 100
+                  priority: 100
+                  rowBackgroundColor: "#808080"
+                  
+               "False":
+                  text: "No"
+#                  icon: ""
+             
+           flagIconaLavorata: 
+             position: 7
+             align: "AlignHCenter"
+             text: "Lavorato"
+             mapValues:
+               "L":
+                  text: "Sì"
+                  tag: "Si"
+                  tooltip: "Evento già lavorato"
+#                 icon: ":/plugins/qgis_agri/images/checked-icon.png"
+#                   rowBackgroundColor: "#e6f2ff"
+                  priority: 1
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+               
+               "S":
+                  text: "Sospesa"
+                  tooltip: "Evento lavorato, ma sospeso" 
+                  icon: ""
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+                  
+               "N":
+                  text: "No"
+                  tooltip: "Evento non lavorato" 
+                  icon: ""
+
+           utenteBlocco:
+             visible: false
+             
+           idAzienda:
+             visible: false
+             
+           idEventoLavorazione:
+             visible: false
+             
+           idUtenteBlocco:
+             visible: false
+ 
+      ElencoFogliAzienda:
+        path: "getElencoFogliAzienda"
+        method: "GET"
+        keyfields: "codiceNazionale,sezione,foglio"
+        selectedField: "_selected"
+        selectionFilterFields: "codiceNazionale,foglio"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            
+        lockFieldExpression: 
+           isFoglioBloccato: 
+             value: true
+             
+        idUtenteBloccoField: "idUtenteBlocco"
+    
+        gridColumns:
+           codiceNazionale: 
+             position: 1
+             text: "Codice nazionale"
+             
+           descrizioneComune: 
+             position: 2
+             text: "Comune"
+             
+           foglio: 
+             position: 3
+             text: "Foglio"
+             
+           numeroParticelle: 
+             position: 4
+             text: "N. particelle"
+             
+           numeroSuoliLavorazione: 
+             position: 5
+             text: "N. suoli in lavorazione"
+             
+           numeroSuoliProposti: 
+             position: 6
+             text: "N. suoli proposti"
+             
+           numeroSuoliSospesi:
+             position: 7
+             text: "N. suoli sospesi"
+                  
+           statoLavorazioneOrig:
+             position: 8
+             align: "AlignHCenter"
+             text: "Stato"
+             mapValues:
+              "N": 
+                  text: "Non lavorato"
+                  tooltip: "Foglio non lavorato"
+                  icon: ""
+                  
+              "L":
+                  text: "Lavorato"
+                  tooltip: "Foglio già lavorato"
+                  icon: ""
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+              
+              "S":
+                  text: "Sospeso"
+                  tooltip: "Foglio sospeso"
+                  icon: ""
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+               
+           isFoglioBloccato:
+             position: 9
+             align: "AlignHCenter"
+             text: "Bloccato"
+             mapValues:
+              "False": 
+                  #text: ""
+                  #tag: "No"
+                  text: "No"
+                  icon: ""
+                  
+              "True":
+                  #text: ""
+                  #tag: "Si"
+                  text: "Sì"
+                  tooltip: "Bloccato da:<br><b>{utenteBlocco}</b>"
+                  icon: ":/plugins/qgis_agri/images/lock-icon.png"
+                  priority: 100
+#                  rowSelectable: false
+                  rowBackgroundColor: "#808080"
+                  rowForegroundColor: "#ffffff"
+                  
+           isDocumentoPresente:
+              position: 10
+              align: "AlignHCenter"
+              text: "Documentazione"
+              mapValues:
+               "S":
+                  text: "Sì"
+                  tooltip: "Presente documentazione"
+                  icon: ""
+                  
+               "N":
+                  text: "No"
+                  tooltip: "Documentazione assente"
+                  icon: ""
+                  
+           _statoLavorazione: 
+             position: 0
+             text: "Stato"
+             mapValues:
+               "0": 
+                  text: ""
+                  tag: "Non lavorato"
+                  tooltip: "Foglio non lavorato"
+                  icon: ""
+               "50":
+                  text: "Foglio in lavorazione"
+                  tag: "In lavorazione"
+                  tooltip: "Foglio in lavorazione"
+                  icon: ":/plugins/qgis_agri/images/edit-icon.png"
+               "100":
+                  text: "Lavorato"
+                  tag: "Lavorato"
+                  tooltip: "Foglio lavorato"
+                  icon: ":/plugins/qgis_agri/images/checked-icon.png"
+               "999":
+                  text: "Foglio sbloccato"
+                  tag: "Sbloccato"
+                  tooltip: "Foglio sbloccato"
+                  icon: ":/plugins/qgis_agri/images/cancel-gray-icon.png"
+             
+           utenteBlocco:
+             visible: false
+             
+           sezione:
+             visible: false
+             
+           idEventoLavorazione:
+             visible: false
+             
+           idUtenteBlocco:
+             visible: false
+             
+      ElencoFogliAziendaOffline:
+        dbName: "ElencoFogliAzienda_v"
+        path: # from local offline DB
+        method:
+        selectionFilterFields: "codiceNazionale,foglio"
+        highlightFoglio: true
+        
+        gridRows:
+           foglioSelBgColor: "#e6ffcc"
+        
+        gridColumns:
+           _statoLavorazioneEdit: 
+             position: 0
+             text: "Stato lavorazione"
+             mapValues:
+               "0":
+                  text: "Non lavorato"
+                  tag: "Non lavorato"
+                  tooltip: "Foglio non lavorato"
+                  #icon: ""
+               "50":
+                  text: "In lavorazione"
+                  tag: "In lavorazione"
+                  tooltip: "Foglio in lavorazione"
+                  #icon: ":/plugins/qgis_agri/images/edit-icon.png"
+               "100":
+                  text: "Lavorato"
+                  tag: "Lavorato"
+                  tooltip: "Foglio lavorato"
+                  #icon: ":/plugins/qgis_agri/images/checked-icon.png"
+               "999":
+                  text: "Sbloccato"
+                  tag: "Sbloccato"
+                  tooltip: "Foglio sbloccato"
+                  #icon: ":/plugins/qgis_agri/images/cancel-gray-icon.png"
+               
+                  
+           codiceNazionale: 
+             position: 1
+             text: "Codice nazionale"
+             
+           descrizioneComune: 
+             position: 2
+             text: "Comune"
+             
+           foglio: 
+             position: 3
+             text: "Foglio"
+             
+           numeroParticelle: 
+             position: 4
+             text: "N. particelle"
+             
+           numeroSuoliLavorazione: 
+             position: 5
+             text: "N. suoli in lavorazione"
+             
+           numeroSuoliProposti: 
+             position: 6
+             text: "N. suoli proposti" 
+                  
+           numeroSuoliSospesi:
+             position: 7
+             text: "N. suoli sospesi"
+             
+           isDocumentoPresente:
+              position: 9
+              align: "AlignHCenter"
+              text: "Documentazione"
+              mapValues:
+               "S":
+                  text: "Sì"
+                  tooltip: "Presente documentazione"
+                  icon: ""
+                  
+               "N":
+                  text: "No"
+                  tooltip: "Documentazione assente"
+                  icon: ""
+             
+           statoLavorazioneOrig:
+             position: 10
+             align: "AlignHCenter"
+             text: "Stato lavorazione originale"
+             mapValues:
+              "N": 
+                  text: "Non lavorato"
+                  tooltip: "Foglio non lavorato"
+                  icon: ""
+                  
+              "L":
+                  text: "Lavorato"
+                  tooltip: "Foglio già lavorato"
+                  icon: ""
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+              
+              "S":
+                  text: "Sospeso"
+                  tooltip: "Foglio sospeso"
+                  icon: ""
+                  rowBackgroundColor: "#ffffcc"
+                  boldFont: true
+             
+           isFoglioBloccato:
+             visible: false
+             
+           utenteBlocco:
+             visible: false
+             
+           idUtenteBlocco:
+             visible: false
+             
+           sezione:
+             visible: false
+             
+           idEventoLavorazione:
+             visible: false
+             
+           _selected:
+              visible: false
+              mapValues:
+               "0": 
+                  rowSelectable: false
+                  rowForegroundColor: "#DCDCDC"
+                  #rowBackgroundColor: "#e6f2ff"
+                  priority: 100
+                  
+           _statoLavorazione:
+              visible: false
+              
+           _statoLavorazionePartEdit:
+             visible: false
+             
+              
+      
+      SuoliFoglio:
+        autoImport: true
+        hasGeometry: true
+        copy: "suoli_rilevati"
+        path: "getSuoliFoglio"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+        
+        dbLayers:
+            SuoliLavorazione:
+              dbName: "suoli_lavorazione"
+              subsetString: "tipoSuolo in ('LAV','LAV_KO','COND','COND_KO')"
+              ##dbFields: "idFeature,codiceEleggibilitaRilevata"
+              ###copy: "suoli_rilevati"
+              ##ogrOptions:
+                  #- "LAUNDER=NO"
+                  #- "GEOMETRY_NAME=geometry"
+              
+            SuoliNoConduzione:
+              dbName: "suoli_noconduzione"
+              subsetString: "tipoSuolo in ('NO_COND')"
+              ##dbFields: "idFeature,codiceEleggibilitaRilevata"
+              ##copy: "suoli_rilevati"
+              ##ogrOptions:
+                  #- "LAUNDER=NO"
+                  #- "GEOMETRY_NAME=geometry"
+                  
+            SuoliNoConduzioneCorrotti:
+              dbName: "suoli_noconduzione_corrotti"
+              subsetString: "tipoSuolo in ('KO')"
+              ##dbFields: "idFeature,codiceEleggibilitaRilevata"
+              ##copy: "suoli_rilevati"
+              ##ogrOptions:
+                  #- "LAUNDER=NO"
+                  #- "GEOMETRY_NAME=geometry"
+        
+        dbErrLayers:
+             MultiLineString:
+               dbName: "suoli_linee"
+               
+             MultiPoint:
+               dbName: "suoli_punti"
+
+      SuoliLavorazioneOffline:
+        dbName: "suoli_rilevati_v"
+        dbFields: "idFeature,tipoSuolo,Foglio,codiceEleggibilitaRilevata,descEleggibilitaRilevata,_statoLavorazioneSuolo"
+        path: # from local offline DB
+        method: 
+        ##foglioFilter: true
+          
+        gridColumns:
+           _statoLavorazioneSuolo: 
+             position: 0
+             text: "Stato"
+             mapValues:
+               "0":
+                  text: ""
+                  tag: "Da lavorare"
+                  tooltip: "Suolo da lavorare"
+                  icon: ""
+               "1":
+                  text: ""
+                  tag: "Lavorato"
+                  tooltip: "Suolo lavorato"
+                  icon: ":/plugins/qgis_agri/images/checked-icon.png"
+               "2":
+                  text: ""
+                  tag: "Sospeso"
+                  tooltip: "Suolo sospeso"
+                  icon: ":/plugins/qgis_agri/images/action-suspend-icon.png"
+               "-9999":
+                  text: ""
+                  tag: "Suolo errato"               
+                  tooltip: "Suolo con problemi (id suolo padre)"
+                  icon: ":/plugins/qgis_agri/images/exclamation-icon.png"
+                  
+           idFeature: 
+             position: 1
+             text: "Identificativo"
+             
+           tipoSuolo: 
+             position: 2
+             text: "Tipo"
+             mapValues:
+               "LAV":
+                  tag: "Suoli in lavorazione"
+                  tooltip: "Suoli in lavorazione"
+               "LAV_KO":
+                  tag: "Suoli in lavorazione corrotti"               
+                  tooltip: "Suoli in lavorazione corrotti"
+               "COND": 
+                  tag: "Suoli in conduzione"
+                  tooltip: "Suoli in conduzione"
+               "COND_KO": 
+                  tag: "Suoli in conduzione corrotti"
+                  tooltip: "Suoli in conduzione corrotti"
+               "NO_COND": 
+                  tag: "Suoli non in conduzione"
+                  tooltip: "Suoli non in conduzione"
+               "KO": 
+                  tag: "Suoli non in conduzione corrotti"
+                  tooltip: "Suoli non in conduzione corrotti"
+                
+             
+           foglio: 
+             position: 3
+             text: "Foglio"
+             
+           codiceEleggibilitaRilevata:
+             position: 4
+             text: "Codice Eleggibilità"
+             
+           descEleggibilitaRilevata:
+             position: 5
+             text: "Descrizione eleggibilità"
+             
+
+
+      SuoliProposti:
+        autoImport: true
+        hasGeometry: true
+        dbName: "suoli_proposti"
+        path: "getSuoliProposti"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+            
+        subData:
+          dbName: "foto_appezzamenti"
+          fieldData: "coordinateFotoAppezzamento"
+          copyLayerFields:
+            - name: "idFeature"
+              rename: "idSuoloFeature"
+              
+          subFields:
+            - name: "idFotoAppezzamento"
+            - name: "latitudine"
+            - name: "longitudine"
+            - name: "direzione"
+              type: "REAL"
+
+
+      ParticelleCatastali:
+        autoImport: true
+        hasGeometry: true
+        dbName: "particelle_catastali"
+        copy: "particelle_catastali_originali"
+        path: "getParticelleFoglio"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            annoCampagna: "{campagna}"
+            cuaa: "{cuaa}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+            
+            
+      ConfineFoglio:
+        serviceDB3: true
+        autoImport: true
+        hasGeometry: true
+        dbName: "confine_foglio"
+        path: "getFoglioRiferimento"
+        method: "GET"
+        params:
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+            annoCampagna: "{campagna}"
+                  
+      ClassiEleggibilita:
+        autoImport: true
+        path: "getClassiEleggibilita"
+        method: "GET"
+        
+      MotivoSospensione:
+        autoImport: true
+        path: "getMotivoSospensione"
+        method: "GET"
+
+      Parametri:
+        autoImport: true
+        path: "getParametri"
+        method: "GET"
+        override:
+          TOLL_COMP_SUOLO: "TOLL_COMP_SUOLO"
+          AREA_MIN_VALID_SUOLO: "TOLL_SUP_MINIMA"
+          TOLL_COMP_CESSATI: "TOLL_CESSATI"
+        
+      SbloccoForzato:
+        dbName: "ElencoAziende"
+        path: "sbloccoForzato"
+        method: "GET"
+        warningDtoCodes:
+            - 200
+            - 201
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            
+      SbloccoForzatoFoglio:
+        dbName: "ElencoAziende"
+        path: "sbloccoForzatoFoglio"
+        method: "GET"
+        onlyFoglioUnlockCodes: 
+           - 101
+        warningDtoCodes:
+#            - 200
+           - 203
+           - 204
+           - 100
+           - 101
+           - 102
+           
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+            
+      SalvaSuoli:
+        path: "salvaSuoli"
+        method: "POST"
+        onlyFoglioUnlockCodes: 
+           - 101
+        warningDtoCodes:
+           - 100
+           - 101
+           
+        headers:
+            #Accept: "application/json"
+            Content-Type: "application/json"
+            
+      BrowseDocumentazione:
+        path: "getSessionToken"
+        browserUrl: "{host}/agriapi/agriwellweb/redirect?token={token}"
+        method: "GET"
+        params:
+            codiceFunzione: "D"
+            idAzienda: "{idAzienda}"
+            codiceRuolo: "{codiceRuolo}"
+            idEventoLavorazione: "{idEventoLavorazione}"
+            idIstanzaRiesame: "{idIstanzaRiesame}"
+            
+        default_value_params:
+            idIstanzaRiesame: ""
+      
+      BrowseContraddizioni:
+        path: "getSessionToken"
+        browserUrl: "{host}/agriapi/agriwellweb/redirect?token={token}"
+        method: "GET"
+        params:
+            codiceFunzione: "C"
+            idAzienda: "{idAzienda}"
+            codiceRuolo: "{codiceRuolo}"
+            idEventoLavorazione: "{idEventoLavorazione}"
+            
+            
+      ScaricaAppezzamentiPhoto:
+        path: "getImmagineFromIdAppezzamento"
+        method: "GET"
+        params:
+            id: "{idFotoAppezzamento}"
+
+                   
+      LeggiDatiSuolo:
+        path: "leggiDatiSuolo"
+        dataKey: "datiGen"
+        method: "GET"
+        params:
+            idSuoloRilevato: "{idSuoloRilevato}"
+      
+      LeggiDatiUtilizzoParticella:
+        path: "leggiDatiUtilizzoParticella"
+        dataKey: "datiUsoPart"
+        method: "GET"
+        params:
+            idSuoloRilevato: "{idSuoloRilevato}"
+            annoCampagna: "{campagna}"
+        summmary:
+          fields:
+            - superficie
+        warningDtoCodes:
+           - 1
+      
+      LeggiDatiUnarPoligono:
+        path: "leggiDatiUnarPoligono"
+        dataKey: "datiUnarPolig"
+        method: "GET"
+        params:
+            idSuoloRilevato: "{idSuoloRilevato}"
+        summmary:
+          fields:
+            - superficie
+        warningDtoCodes:
+           - 1
+      
+      LeggiDatiUnarParticella:
+        path: "leggiDatiUnarParticella"
+        dataKey: "datiUnarPart"
+        method: "GET"
+        params:
+            idSuoloRilevato: "{idSuoloRilevato}"
+        summmary:
+          fields:
+            - superficie
+        warningDtoCodes:
+           - 1
+           
+      LeggiDatiUtilizzoCatasto:
+        path: "leggiDatiUtilizzoCatasto"
+        dataKey: "datiUsoPart"
+        method: "GET"
+        params:
+            annoCampagna: "{annoCampagna}"
+            codiceNazionale: "{codiceNazionale}"
+            sezione: "{sezione}"
+            foglio: "{foglio}"
+            numeroParticella: "{numeroParticella}"
+            subalterno: "{subalterno}"
+        summmary:
+          fields:
+            - superficie
+        warningDtoCodes:
+           - 1
+              
+      LeggiDatiUnarCatasto:
+        path: "leggiDatiUnarCatasto"
+        dataKey: "datiUnarPart"
+        method: "GET"
+        params:
+            codiceNazionale: "{codiceNazionale}"
+            sezione: "{sezione}"
+            foglio: "{foglio}"
+            numeroParticella: "{numeroParticella}"
+            subalterno: "{subalterno}"
+        summmary:
+          fields:
+            - superficie
+        warningDtoCodes:
+           - 1
+      
+
+      StoricoFoglioGeoPackage:
+        path: "getStoricoFoglioGeoPCK"
+        method: "GET"
+        params:
+            foglio: "{foglio}"
+            codiceNazionale: "{codiceNazionale}"
+      
+      LeggiAppezzamentiScheda:
+        path: "leggiAppezzamentiScheda"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            idDichiarazioneConsistenza: "{idDichiarazioneConsistenza}"
+            codNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+            
+      LeggiValidazioniAzienda:
+        path: "leggiValidazioniAzienda"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+        
+        convertAsDatetime:
+          data:
+            newFieldName: "__data"
+            formats:
+              - "%d/%m/%Y"
+              - "%d/%m/%y"
+              - "%d/%m/%Y %H:%M:%S"
+              - "%d/%m/%y %H:%M:%S"
+        
+        dataFields:
+          id: "idDichiarazioneConsistenza"   
+          data: "data"
+          loaded: "__loaded"
+                 
+        sortByFields:
+          - "-annoCampagna" # prefix with minus char for desc sorting
+          - "-__data"
+          - "-data"
+            
+        gridColumns:
+           __loaded:
+             position: 1
+             align: "AlignHCenter"
+             text: " "
+             width: 10
+             resizable: false
+             mapValues:
+               "0":
+                  text: ""
+               "1":
+                  text: ""
+                  tooltip: "Caricato"
+                  icon: ":/plugins/qgis_agri/images/action-validated-icon.png"
+               
+           annoCampagna: 
+             position: 2
+             align: "AlignHCenter"
+             text: "Anno campagna"
+             
+           __data:
+             position: 3
+             text: "Data"
+             format:
+                function: "datetime"
+                params: "%d/%m/%Y"
+             
+           pratiche: 
+             position: 4
+             text: "Pratiche"
+             
+           motivo: 
+             position: 5
+             text: "Motivo"
+             
+           idDichiarazioneConsistenza:
+             visible: false
+             
+           data:
+             visible: false
+      
+      ParticelleLavorazioni:
+        autoImport: true
+        particelleWorking: true
+        path: "getParticelleLavorazioni"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+
+      ParticelleLavorazioniOffline:
+        dbName: "ParticelleLavorazioni_v"
+        path: # from local offline DB
+        
+        gridColumns:
+           _statoLavorazionePart:
+             position: 0
+             text: "Stato"
+             mapValues:
+               "0":
+                  text: ""
+                  tag: "Da lavorare"
+                  tooltip: "Particella da lavorare"
+                  icon: ""
+               "1":
+                  text: ""
+                  tag: "Cessata"
+                  tooltip: "Particella cessata"
+                  icon: ":/plugins/qgis_agri/images/deleted-icon.png"
+               "2":
+                  text: ""
+                  tag: "Lavorata"
+                  tooltip: "Particella lavorata"
+                  icon: ":/plugins/qgis_agri/images/checked-icon.png"
+               "3":
+                  text: ""
+                  tag: "Sospesa"
+                  tooltip: "Particella sospesa"
+                  icon: ":/plugins/qgis_agri/images/action-suspend-icon.png"
+               "33":
+                  text: ""
+                  tag: "Lavorazione sospesa"
+                  tooltip: "Lavorazione sospesa (no geometria)"
+                  icon: ":/plugins/qgis_agri/images/action-rejected-icon.png"
+                  priority: 100
+                  rowBackgroundColor: "#ffffcc"
+              
+           numeroParticella: 
+             position: 1
+             text: "Particella"
+             
+           subalterno: 
+             position: 2
+             text: "Subalterno"
+            
+           flagPresenzaCxf:
+             position: 3
+             text: "CXF"
+             mapValues:
+               "N":
+                  text: "No"
+                  icon: ""
+                  
+               "S":
+                  text: "Sì"
+                  icon: ""
+                  
+           flagPresenzaAllegati:
+             position: 4
+             text: "Allegati"
+             mapValues:
+               "N":
+                  text: "No"
+                  icon: ""
+                  
+               "S":
+                  text: "Sì"
+                  icon: ""
+                  
+           flagLavorato:
+             position: 5
+             text: "Lavorata"
+             mapValues:
+               "N":
+                  text: "No"
+                  icon: ""
+                  tooltip: "{noteRichiesta} {noteLavorazione}"
+                  
+               "S":
+                  text: "Sì"
+                  icon: ""
+                  tooltip: "{noteRichiesta} {noteLavorazione}"
+                  
+           _flagSospensioneEdit:
+             position: 6
+             text: "Sospesa"
+             mapValues:
+               "N":
+                  text: "No"
+                  icon: ""
+                  
+               "S":
+                  text: "Sì"
+                  icon: ""
+                  tooltip: "{_descrizioneSospensioneEdit:s}"
+                  boldFont: true
+                  
+           _duplicated:
+             position: 7
+             text: "Duplicata"
+             mapValues:
+               "0":
+                  text: ""
+                  tag: "Non duplicata"
+                  icon: ""
+                  
+               "1":
+                  text: ""
+                  tag: "Duplicata"
+                  tooltip: "Particella duplicata" 
+                  icon: ":/plugins/qgis_agri/images/exclamation-icon.png"
+                  rowBackgroundColor: "#ffd6cc"
+                  priority: 200
+           
+           codiceNazionale: 
+             visible: false
+             
+           foglio: 
+             visible: false
+            
+           idParticellaLavorazione: 
+             visible: false
+             
+           idEventoLavorazione: 
+             visible: false
+             
+           idVersioneParticella:
+             visible: false
+             
+           idParticella:
+             visible: false
+             
+           idPraticaOrigine:
+             visible: false
+             
+           descrizioneSospensione:
+             visible: false
+             
+           _descrizioneSospensioneEdit:
+             visible: false
+             
+           _has_geometry:
+             visible: false
+             
+           noteRichiesta:
+             visible: false
+             
+           noteLavorazione:
+             visible: false
+             
+           flagSospensione:
+             visible: false
+             
+
+      CxfParticelle:
+        path: "getCxfParticella"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+
+
+      ElencoAllegatiParticella:
+        path: "getElencoAllegatiParticella"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            codiceNazionale: "{codiceNazionale}"
+            foglio: "{foglio}"
+            
+        gridColumns:
+            idAllegato:
+               visible: false
+               
+            nomeLogico:
+               position: 1
+               text: "Nome logico"
+               
+            nomeFisico:
+               position: 2
+               text: "Nome fisico"
+               
+            descrizione:
+               position: 3
+               text: "Descrizione"
+            
+            
+      AllegatoParticella:
+        path: "getAllegatoParticella"
+        method: "GET"
+        params:
+            idEventoLavorazione: "{idEventoLavorazione}"
+            idAllegato: "{idAllegato}"
+
+##---------------------------
+## Layers settings
+##---------------------------
+ODB:
+   database: agri_offline.sqlite
+   
+   scripts:
+      initialize:
+#          - agri_offline_download.sql
+         - agri_offline.sqlite.sql
+      reset:
+         - agri_offline_reset.sql
+         
+   crs: 
+     layer: "EPSG:3003"
+     map: "EPSG:3003"
+     
+   groups:
+#      - "SUOLI/NON_IN_CONDUZIONE"
+      - "SUOLI"
+      - "PARTICELLE"
+      - "RASTER"
+   
+   layers:
+        
+      suoli_proposti:
+        readonly: true
+        tocname: "Suoli proposti"
+        tocgroup: "SUOLI"
+        tocorder: 1
+        checkIfEmpty: false
+        checkIfFound: false
+        stylefile: "suoli_proposti.qml"
+        numFeatureField: "numeroSuoliProposti"
+        commands:
+           - "confirmproposti|action"
+           - "confirmproposti|sel"
+           - "showlabels"
+           - "showArealabels"
+           - "browsedocproposti"
+           - "browsephotoproposti|sel"
+           
+      
+      suoli_lavorazione:
+        tocname: "IN_CONDUZIONE"
+        tocgroup: "SUOLI"
+        tocorder: 2
+        editorder: 1
+        canBeEmptyForPartLav: true
+        setcurrent: true
+        stylefile: "suoli_lavorazione.qml"
+        connectSuoloSlots: true
+        refSnapLayer: 1
+        baseFilter: "COALESCE(cessato,0) != 1"
+        commands:
+           - "editing"
+           - "editing|grab"
+           - "editing|select"
+           - "checkvalidity"
+           - "repairsuolo"
+           - "repair-all-suoli"
+           - "suspendsuolo"
+           - "confirmproposti"
+           - "confirmproposti|dest"
+           - "confirmproposti|action"
+           - "identitysuolo"
+           - "drawpolygon"
+           - "delpolygon"
+           - "addpolygonhole"
+           - "delpolygonhole"
+           - "vertextool"
+           - "checksuolibloccati"
+           - "showlabels"
+           - "showArealabels"
+           - "salvasuoli"
+           - "chkTopoSuoli|suoliCondLayer"
+           - "splitsuoli"
+           - "fillsuoli"
+           - "dissolvesuoli"
+           - "diffsuoli"
+           - "seteleggibilita"
+           - "findsuolo"
+           - "scaricaDatiSuolo"
+           - "scaricaDatiPCG"
+           - "confirmallsuoli"
+           - "cloneParticellaSuolo"
+           - "cloneParticellaSuolo|cond"
+           - "cloneSuoloParticella|sel"
+           - "suoliCondParticella|action"
+           - "suoliCondParticella|dest"
+           
+      suoli_noconduzione:
+        readonly: true
+        refSnapLayer: 3
+        tocname: "Non corrotti"
+        tocgroup: "SUOLI/NON_IN_CONDUZIONE"
+        tocorder: 2
+        editorder: 2
+        stylefile: "suoli_noconduzione.qml"
+        checkIfEmpty: false
+        baseFilter: "COALESCE(cessato,0) != 1"
+        commands:
+           - "editing|close"
+           - "chkTopoSuoli|suoliNoCondLayer"
+           - "confirmproposti|cut"
+           - "fillsuoli|cut"
+           - "diffsuoli|cut"
+           - "suoliCondParticella|nocond"
+           - "salvasuoli|nocond"
+        
+      suoli_noconduzione_corrotti:
+        tocname: "Corrotti"
+        tocgroup: "SUOLI/NON_IN_CONDUZIONE"
+        tocorder: 1
+        editorder: 2
+        stylefile: "suoli_noconduzione_corrotti.qml"
+        connectSuoloSlots: true
+        refSnapLayer: 2
+        checkIfEmpty: false
+        readonlyFields: "*"
+        editStateOnly: true
+        #excludeIfEmpty: true
+        baseFilter: "COALESCE(cessato,0) != 1"
+        commands:
+           - "editing"
+           - "editing|grab"
+           - "showlabels"
+           - "showArealabels"
+           - "repair-all-suoli"
+           - "confirmproposti"
+           - "vertextool"
+           - "chkTopoSuoli|suoliNoCondErrLayer"
+           - "findsuolo"
+           - "repairsuolo"
+           - "fillsuoli|cut"
+           - "diffsuoli|cut"
+           - "scaricaDatiSuolo"
+           - "confirmallsuoli"
+           - "cloneParticellaSuolo"
+           - "cloneParticellaSuolo|nocond"
+           - "cloneSuoloParticella|sel"
+           - "suoliCondParticella|action"
+           - "suoliCondParticella|nocond"
+           - "suoliCondParticella|nocond|dest"
+           - "drawpolygon"
+           - "delpolygon"
+           - "addpolygonhole"
+           - "delpolygonhole"
+           - "splitsuoli"
+           - "fillsuoli"
+           - "dissolvesuoli"
+           - "diffsuoli"
+           - "identitysuolo"
+           
+      suoli_rilevati:
+        readonly: true
+        visible: false
+        tocname: "Suoli rilevati"
+        tocgroup: "SUOLI"
+        tocorder: 4
+        editorder: 1
+        stylefile: "suoli_rilevati.qml"
+        numFeatureField: "numeroSuoliLavorazione"
+        numFeatureFilter: "tipoSuolo in ('LAV','LAV_KO','COND_KO', 'KO')"
+        numFeatureLayerAlias: "suoli_lavorazione"
+        commands:
+           - "idfeaturepadre|sel"
+           - "findsuolo"
+           - "scaricaDatiSuolo|base"
+           - "scaricaDatiPCG|base"
+           
+      suoli_linee:
+        readonly: true
+        visible: false
+        tocname:
+        tocgroup: "SUOLI"
+        tocorder: 98
+        stylefile: ""
+        excludeIfEmpty: true
+        
+      suoli_punti:
+        readonly: true
+        visible: false
+        tocname:
+        tocgroup: "SUOLI"
+        tocorder: 99
+        stylefile: ""
+        excludeIfEmpty: true
+           
+      particelle_catastali:
+        readonly: true
+        setcurrentPart: true
+        tocname: "Particelle catastali"
+        tocgroup: "PARTICELLE"
+        tocorder: 0
+        editorder: 1
+        stylefile: "particelle_catastali.qml"
+#        numFeatureField: "numeroParticelle"
+        connectParticelleSlots: true
+        baseFilter: "COALESCE(flagCessato,0) != 1"
+        commands:
+           - "showlabels"
+           - "showArealabels"
+           - "confirmproposti|overlap"
+           - "salvasuoli|particelle"
+           - "editingParticelle"
+           - "fillParticelle"
+           - "splitParticelle"
+           - "dissolveParticelle"
+           - "diffParticelle"
+           - "delParticelle"
+           - "vertexParticelle"
+           - "addHoleParticelle"
+           - "delHoleParticelle"
+           - "dissolveParticelle"
+           - "diffParticelle"
+           - "repairParticelle"
+           - "repairAllParticelle"
+           - "cloneParticellaCxf"
+           - "cloneSuoloParticella"
+           - "scaricaDatiParticella"
+           - "downloadCXF"
+           - "identityParticella"
+           - "cloneParticellaSuolo|sel"
+           - "suoliCondParticella|sel"
+
+      particelle_catastali_originali:
+        readonly: true
+        visible: false
+        tocname: "Particelle catastali Originali"
+        tocexpanded: false
+        tocgroup: "PARTICELLE"
+        tocorder: 1
+        editorder: 2
+        stylefile: "particelle_catastali.qml"
+        particelleWorkOnly: true
+        commands:
+           - "scaricaDatiParticella|base"
+
+      confine_foglio:
+        layerDB3: true
+        readonly: true
+        tocname: "Confine foglio"
+        tocgroup: "PARTICELLE"
+        tocorder: 2
+        editorder: 2
+        stylefile: "confine_foglio.qml"
+        commands:
+           - "chkTopoConfine"
+           
+      foto_appezzamenti:
+        readonly: true
+        tocname:
+        tocgroup: "SUOLI"
+        tocorder: 0
+        tocexpanded: false
+        checkIfEmpty: false
+        checkIfFound: false
+        excludeIfEmpty: true
+        crs: "EPSG:4326"
+        stylefile: "foto_appezzamenti.qml"
+        commands:
+           - "browsephotoproposti"
+           - "browsephotoproposti|sel"
+           
+      particelle_cxf:
+        readonly: true
+        tocname:
+        tocgroup: "PARTICELLE"
+        tocorder: 0
+        tocexpanded: false
+        checkIfEmpty: false
+        checkIfFound: false
+        excludeIfEmpty: true
+        stylefile: "particelle_cxf.qml"
+        commands:
+           - "cloneParticellaCxf|sel"
+
+##---------------------------
+## PCG settings
+##---------------------------
+PCG:
+   crs: "EPSG:3003"
+
+   groups:
+      - "PIANO COLTURALE GRAFICO"
+      - "*STORICO" # * do not create folder; used for position in TOC
+      - "SUOLI"
+      - "PARTICELLE"
+      - "RASTER"
+
+   layers: 
+      pcg:
+        readonly: true
+        readonlyFields: "*"
+        tocname: "Piano Colturale Grafico"
+        tocgroup: "PIANO COLTURALE GRAFICO"
+        tocorder: 0
+        tocexpanded: false
+        checkIfEmpty: false
+        checkIfFound: false
+        excludeIfEmpty: true 
+        stylefile: "piano_colturale_grafico.qml"
+        commands:
+           - "scaricaDatiPCG"     
+
+##---------------------------
+## Storico settings
+##---------------------------
+STORICO:
+   crs: "EPSG:3003"
+
+   groups:
+      - "*PIANO COLTURALE GRAFICO" # * do not create folder; used for position in TOC
+      - "STORICO"
+      - "SUOLI"
+      - "PARTICELLE"
+      - "RASTER"
+
+   layers: 
+      SUOLO:
+        readonly: true
+        readonlyFields: "*"
+        tocname:
+        tocgroup: "STORICO"
+        tocorder: 0
+        checkIfEmpty: false
+        checkIfFound: false
+        excludeIfEmpty: false
+        stylefile: "suoli_lavorazione_storico.qml"  
+
+##---------------------------
+## Sfondi settings
+##---------------------------        
+WMS:
+   ogcproxyRenewSeconds: 900
+   
+   layers:
+          
+      Ortofoto AGEA 2012:
+        tocname: "Ortofoto AGEA 2012"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_agea_2012"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          maxHeight: 256
+          maxWidth: 256
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2012&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+      
+      Ortofoto AGEA 2015:
+        tocname: "Ortofoto AGEA 2015"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_agea_2015"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          maxHeight: 256
+          maxWidth: 256
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2015&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+      
+      Ortofoto AGEA 2018:
+        tocname: "Ortofoto AGEA 2018"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_agea_2018"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          maxHeight: 256
+          maxWidth: 256
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2018&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+          
+      Ortofoto AGEA 2021:
+        tocname: "Ortofoto AGEA 2021"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        loadOnWork: true
+        uri:
+          layers: "regp_agea_2021"
+          #layers: "regp_agea_2021_wmts"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          maxHeight: 256
+          maxWidth: 256
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?LAYERS=regp_agea_2021&FORMAT=image/jpeg&SRS=EPSG:3003&EXCEPTIONS=application/vnd.ogc.se_inimage&VERSION=1.1.1"
+          #url: "https://<HOSTNAME>/wmspiemonteagri/wmts/1.0.0/WMTSCapabilities.xml"
+      
+      Ortofoto VHR 2021:
+        tocname: "Ortofoto VHR 2021"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_ortofoto_satellite_2021_VHR"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_VHR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+      
+      
+      Ortofoto sat. HR 01-02-2021:
+        tocname: "Ortofoto satellite HR 01-02-2021"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_ortofoto_satellite_2021_01-02_HR"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_01-02_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+      
+      Ortofoto sat. HR 04-2021:
+        tocname: "Ortofoto satellite HR 04-2021"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_ortofoto_satellite_2021_04_HR"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_04_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+      
+      Ortofoto sat. HR 05-06-2021:
+        tocname: "Ortofoto HR satellite 05-06-2021"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_ortofoto_satellite_2021_05-06_HR"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_05-06_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+           
+      Ortofoto sat. HR 07-08-2021:
+        tocname: "Ortofoto satellite HR 07-08-2021"
+        tocgroup: "RASTER"
+        ogcproxy: true
+        uri:
+          layers: "regp_ortofoto_satellite_2021_07-08_HR"
+          crs: "EPSG:3003"
+          format: "image/png"
+          styles: ""
+          dpiMode: 7
+          url: "https://<HOSTNAME>/wmspiemonteagri/service?crs=EPSG:3003&dpiMode=7&format=image/png&layers=regp_ortofoto_satellite_2021_07-08_HR&styles&url=https://<HOSTNAME>/wmspiemonteagri/service"
+      
+          
+      Cartografia Regione Piemonte:
+        tocname:
+        tocgroup: "RASTER"
+        loadOnInit: true
+        uri:
+          layers: "regp_sfondo_bdtre_wmts"
+          crs: "EPSG:32632"
+          format: "image/png"
+          styles: "default"
+          tileMatrixSet: "grid_32632_nw"
+          dpiMode: 7
+          url: "http://<HOSTNAME>/WEBCAT/CAPABILITIES/wmts_regp_sfondo_bdtre.xml"

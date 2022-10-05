@@ -1,0 +1,12 @@
+QGIS Agri * Copyright (c) 2019 CSI Piemonte
+
+Licensed under the terms of GNU GPL v2 (or any layer)
+http://www.gnu.org/copyleft/gpl.html
+
+
+Code:
+- some code is derived from DB Manager by Giuseppe Sucameli (GPLv2 license)
+- some code is derived from Processing by Victor Olaya (GPLv2 license)
+
+Icons:
+

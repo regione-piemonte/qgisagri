@@ -1,0 +1,2 @@
+${02.nome}.pks, ${02.nome}.pkb, \ - PCK_QGIS_AGGIORNAMENTO_TABELLE
+${03.nome}.pks, ${03.nome}.pkb, \ - PCK_QGIS_LIBRERIA

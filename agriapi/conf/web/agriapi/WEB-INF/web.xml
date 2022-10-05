@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:web="http://java.sun.com/xml/ns/javaee"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  id="WebApp_ID" version="2.5">
+  <welcome-file-list>
+    <welcome-file>main.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>redirect-servlet</servlet-name>
+    <servlet-class>it.csi.qgisagri.agriapi.presentation.servlet.RedirectServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>redirect-servlet</servlet-name>
+    <url-pattern>/agriwellweb/redirect/*</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>Shibboleth filter</filter-name>
+    <filter-class>it.csi.shibboleth.shibfilter.ShibbolethFilter</filter-class>
+    <!-- parametri da iniettare in sessione personalizzabile per applicazione -->
+    <init-param>
+      <param-name>IRIDE_ID_SESSIONATTR</param-name>
+      <param-value>identita</param-value>
+    </init-param>
+    <init-param>
+      <param-name>NO_CHECK_PAGE</param-name>
+      <param-value></param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Shibboleth filter</filter-name>
+    <url-pattern>/json/*</url-pattern>
+  </filter-mapping>
+</web-app>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Autenticazione</title>
+
+<style>
+table.fixed
+{
+  table-layout: fixed;
+}
+td.fixed-txt
+{
+  width: 100px;
+  font-family: "{{ font_family }}";
+  font-size: {{ font_point_size }}pt;
+  font-weight: 75;
+  /*word-wrap:break-word;*/
+  padding: 5px;
+}
+td.ext-txt
+{
+  font-family: "{{ font_family }}";
+  font-size: {{ font_point_size }}pt;
+  font-weight: 75;
+  /*word-wrap:break-word;*/
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+
+<img src="{{ img }}">
+
+<br>
+
+<table class="fixed" style="margin: 10px">
+  <tr>
+    <td class="fixed-txt"><b>Codice fiscale</b></td>
+    <td class="ext-txt">{{ cf }}</td>
+  </tr>
+  <tr>
+    <td class="fixed-txt"><b>Ruolo</b></td>
+    <td class="ext-txt">{{ ruolo }}</td>
+  </tr>
+</table>
+
+</body>
+
+</html>

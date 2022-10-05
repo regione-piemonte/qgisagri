@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 0px;
+  /*
+  padding: 6px 12px;
+  
+  border: 1px solid #ccc;
+  border-top: none;
+  */
+  border: none;
+}
+
+/* Style table */
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: left;
+  padding: 3px;
+}
+
+.tabvertical tr:nth-child(even) {
+  background-color: #eee;
+}
+.tabvertical tr:nth-child(odd) {
+ background-color: #fff;
+}
+
+.tabhorizontal tr:nth-child(even) {
+  background-color: #fff;
+}
+.tabhorizontal tr:nth-child(odd) {
+ background-color: #eee;
+}
+
+.tabheader th {
+  background-color: black;
+  color: white;
+}
+
+tr.tabtotal {
+  border-top: 3px solid;
+}
+.tabtotal {
+  background-color: #fff !important;
+}
+
+.toolBarButton {
+  margin: 0px;
+  padding: 0px;
+}
+
+.headerpanel {
+  display: flex; 
+  justify-content: space-between;
+  width:100%; 
+  padding: 0; 
+  padding-left: 4px;
+  margin-bottom: 4px; 
+  background-color: #FFD700 !important;
+}
+
+</style>
+</head>
+<body onload="initPanels()">
+
+<div class="headerpanel">
+	<p>
+		<b>ID particella origine: </b>
+		
+		{% if lstIdFeature|length < 2 %}
+		{{ idFeature }}
+		{% else %}
+		<select id="lstIdFeature" name="lstIdFeature" onchange="onChangeParentFeature()">
+	    {% for value in lstIdFeature %}
+	        <option value="{{value}}" 
+	        {% if value == idFeature %} selected="selected" {% endif %}
+	        >
+	        {{value}}
+	        </option>
+	    {% endfor %}
+		</select> 
+		{% endif %}	
+		
+		&nbsp;&nbsp;&nbsp;( <b><i>{{ layerName|sn }}</i></b> )
+	</p>
+
+	<button id="btnZoom" class="toolBarButton" onclick="onZoomToSuolo()" title="Zoom sul suolo">
+		<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSJVByuIOGSoThZERRxLFYtgobQVWnUwufQLmjQkKS6OgmvBwY/FqoOLs64OroIg+AHi5Oik6CIl/i8ptIjx4Lgf7+497t4BQqPCVLNrElA1y0jFY2I2tyoGXiGgH0MIQ5CYqSfSixl4jq97+Ph6F+FZ3uf+HH1K3mSATySOMt2wiDeIZzctnfM+cYiVJIX4nHjCoAsSP3JddvmNc9FhgWeGjExqnjhELBY7WO5gVjJU4hnisKJqlC9kXVY4b3FWKzXWuid/YTCvraS5TnMUcSwhgSREyKihjAosRGjVSDGRov2Yh3/E8SfJJZOrDEaOBVShQnL84H/wu1uzMD3lJgVjQPeLbX+MAYFdoFm37e9j226eAP5n4Epr+6sNYO6T9HpbCx8BA9vAxXVbk/eAyx1g+EmXDMmR/DSFQgF4P6NvygGDt0Dvmttbax+nD0CGulq+AQ4OgfEiZa97vLuns7d/z7T6+wFFz3KVWhgVzwAAAAZiS0dEAP8AxwAAp8f8NgAAAAlwSFlzAAAN1wAADdcBQiibeAAAAAd0SU1FB+QCDhUlD7m/e4oAAAO8SURBVEjHrZRLbFtFFIbPzB3f66T4mRdVmsRSEhsIAkRUEQRR2ERRhHBrRy7bbpoNUbdECPHoAkVIkbphgYRESsiiYDsmkZsFuzgPVY4lZEVKQLKtPGSJ1LfBxvZ9zdxhUVJCqV2X5t/OzPefOWfmR/AUCgQCL1oslvcEQXibUuo2TVMghJQA4BdFUeJLS0sJAOCnz6BGwKFQyEEI+RwALo6OjkrDw8Muh8tl5Zwb+cPDP7a3t43V1VWlVCod6br+0eLi4m8NGwSDwQuEkG+GhobsoStXbO6WlvMYY3KybpomLR4f73HOeSKR4JFIROecT4fD4QQAgPCEyp8jhHw7Pj7eOjEx0eRwuS6cwE3OTV3T/lSq1QI3TYoQgp6eHtTX10e2trbe8Xq9a7u7uzKuZ4AQ+sDn87WMjY0JzefOdWCMBQ7ANUWRS8fHuWqlcsQo1U6f6e/vh2AwKImi+AUAIKFO9W4AuDE1NSU6HI5ma1OTGwBAKZd/V1W1VK+wrq4utLGxIXk8nkzNGzDGRnp7e6nL5QLJarUDADBKVU3Tyk+aG8YYRkZGrFar9d2aBqIovj4wMNCMEAJMSDMAgPFIO+rJ6/UizvlruE4VzzudTsAYCxihB/s4Z40aOJ1OMAzDXm/IhmEYwPk//4ZzbjZqwBgDhBCraUApPZRl2TRNk1FK9b/ffMM3KBQKYLFYaj9TVVXXUqmUCgBQLZfzlUrlnqHr5UYN0uk0MwxjDdfpz11Zls1MJgOMMaqrapGf7lcdKYoC6+vrjHO+VNNgZWVFMwzjaHZ29uWDgwPpaUIxHA7rnPONSCSyi2sn5+WbjLFQNpsVZ2ZmfHt7ew2ZxONxlkqlioSQGzWzKBC4dJ1z9Nnm5ibkcjkkiqKws7Nj9/l899xu92PBsizD3Nyclkwmj1RVnQyHw4XHpmkweOl9T3fnrVdfsEu3Y3chmdqGoaE3QBDID6IotrndbjI4OGhtbW3FgiBAsViEdDpdzeVyBGP8o6IoXy8vL1dPeOTflftDnu7OWx9ee0lqpXcg9ysB0foWIMS/WlyMTYVCITGfz18sFApvSpLUDQAipTSvKErKZrMlFhYW/pNR6BH4/PTkgNTO7kB2X4aPv2tXNSp8Go3GvoT/KVIPrjPhWjQa+x6eQSQQ8Ic6z7fPT08OSG0sDtn9+w/hkcizwQEAiIWgm8O+vNhGc5DZL8Mn8x2qRtHVaDR2G85ARNX4eCRBEoZRtcWTHdoD+E9nAn84ZL/f/4poQT+bHK6fJRwA4C94/9MKwyhDFgAAAABJRU5ErkJggg=='/>
+	</button>
+</div>
+
+
+
+<div class="tab">
+  <button id="tabUsoParticella" class="tablinks" onclick="onChangeTab(event,'tabUsoParticella','panUsoParticella')">Utilizzo Particella</button>
+  <button id="tabUNARParticella" class="tablinks" onclick="onChangeTab(event,'tabUNARParticella','panUNARParticella')">UNAR Particella</button>
+</div>
+
+<div id="panUsoParticella" class="tabcontent">
+	<!-- Tabulazione orizzontale -->
+	<table class="tabhorizontal" style="width:100%">
+	    <tr class="tabheader">
+	        <th></th>
+			<th>Superficie Utilizzata</th>
+			<th>Utilizzo</th> 
+			<th>Destinazione</th>
+			<th>Dettaglio Uso</th>
+			<th>Qualità Uso</th>
+			<th>Varietà</th>
+		</tr>
+		{% for datoUsoPart in datiUsoPart %}
+		<tr>
+		   <td></td>
+		   <td>{{ datoUsoPart.superficie|sn|e }} ha</td>
+		   <td>{{ datoUsoPart.utilizzo|sn|e }}</td>
+		   <td>{{ datoUsoPart.destinazione|sn|e }}</td>
+		   <td>{{ datoUsoPart.dettaglioUso|sn|e }}</td>
+		   <td>{{ datoUsoPart.qualita|sn|e }}</td>
+		   <td>{{ datoUsoPart.varieta|sn|e }}</td>
+		</tr>
+		{% endfor %}
+		{% if datiUsoPart_summery is defined %}
+		<tr class="tabtotal">
+		    <td><b>Totale</b></td>
+			<td>{{ datiUsoPart_summery.superficie|sn|e }} ha</td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+	    </tr>
+	    {% endif %}
+	</table>
+</div>
+
+<div id="panUNARParticella" class="tabcontent">
+	<!-- Tabulazione orizzontale -->
+	<table class="tabhorizontal" style="width:100%">
+	    <tr class="tabheader">
+	        <th></th>
+			<th>Tipo</th>
+			<th>Superficie</th> 
+			<th>Anno Impianto</th>
+			<th>Varietà</th>
+			<th>Varietà FAG</th>
+			<th>Id Unità Arborea</th>
+			<th>Data Aggiornamento</th>
+			<th>Comune</th>
+		    <th>Sezione</th>
+		    <th>Foglio</th>
+		    <th>Particella</th>
+		    <th>Subalterno</th>
+		</tr>
+		{% for datoUnarPart in datiUnarPart %}
+		<tr>
+		   <td></td>
+		   <td>{{ datoUnarPart.tipo|sn|e }}</td>
+		   <td>{{ datoUnarPart.superficie|sn|e }}</td>
+		   <td>{{ datoUnarPart.annoImpianto|sn|e }}</td>
+		   <td>{{ datoUnarPart.varieta|sn|e }}</td>
+		   <td>{{ datoUnarPart.varietaFag|sn|e }}</td>
+		   <td>{{ datoUnarPart.idUnitaArborea|sn|e }}</td>
+		   <td>{{ datoUnarPart.dataAggiornamento|sn|e }}</td>
+		   <td>{{ datoUnarPart.comune|sn|e }}</td>
+		   <td>{{ datoUnarPart.sezione|sn|e }}</td>
+		   <td>{{ datoUnarPart.foglio|sn|e }}</td>
+		   <td>{{ datoUnarPart.particella|sn|e }}</td>
+		   <td>{{ datoUnarPart.subalterno|sn|e }}</td>
+		</tr>
+		{% endfor %}
+		{% if datiUnarPart_summery is defined %}
+		<tr class="tabtotal">
+		    <td><b>Totale</b></td>
+		    <td></td>
+			<td>{{ datiUnarPart_summery.superficie|sn|e }} ha</td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+	    </tr>
+        {% endif %}
+	</table>
+</div>
+
+{% block scripts %}
+<script type="text/javascript">
+function initPanels() {  
+  var el = document.getElementById("{{currentTabName}}");
+  if (!el) { 
+	  el = document.getElementById("tabUsoParticella")
+  } 
+  if (!!el) {
+	  el.click();
+  }
+}
+</script>
+{% endblock %}
+
+
+<script type="text/javascript">
+
+function onChangeTab(evt, tabName, panName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(panName).style.display = "block";
+  evt.currentTarget.className += " active";
+  try {
+		pyroleapi.change_tab(tabName);
+	}
+	catch(err) {
+		alert(err);
+	}
+}
+
+function onZoomToSuolo() 
+{
+	try {
+		pyroleapi.zoom_to_feature();
+	}
+	catch(err) {
+		alert(err);
+	}
+}
+
+function onChangeParentFeature() 
+{
+	try {
+		var value = document.getElementById("lstIdFeature").value;
+		pyroleapi.change_parent_feature(value);
+	}
+	catch(err) {
+		alert(err);
+	}
+}
+
+</script>
+   
+</body>
+</html> 

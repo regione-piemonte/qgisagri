@@ -1,0 +1,11 @@
+**/__pycache__/
+___help
+experimental/
+data/old/
+styles/old/
+help/qgis_agri_venv
+env/venv
+env/qgis_agri_ext_browser
+README.html
+README.txt
+dist

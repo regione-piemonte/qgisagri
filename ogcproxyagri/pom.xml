@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.csi.ogcproxyagri</groupId>
+	<artifactId>ogcproxyagri</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>ogcproxyagri</name>
+
+	<modules>
+		<module>ogcproxyagri-web</module>
+		<module>ogcproxyagri-tar</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.1.1.RELEASE</spring.version>
+		<tar.version>1.0.0</tar.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>it.csi.ogcproxyagri</groupId>
+				<artifactId>ogcproxyagri-web</artifactId>
+				<version>1.0.0</version>
+				<type>war</type>
+				<scope>compile</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>unpack</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-ear-plugin</artifactId>
+							<configuration>
+								<unpackTypes>war</unpackTypes>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+		<!-- Configurazioni per l'ambiente di sviluppo -->
+		<!--  profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		</profile-->
+		<!-- Configurazioni per l'ambiente di produzione -->
+		<!--  profile>
+			<id>prod-int-01</id>
+			<properties>
+				<build.profile.id>prod-int-01</build.profile.id>
+			</properties>
+		</profile-->
+	</profiles>
+
+</project>

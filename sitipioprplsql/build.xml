@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${componente}" default="all-target">
+	<description>Build file del componente pmcomutility</description>
+
+	<property file="buildfiles/build.properties"/>
+
+	<target name="all-target" description="Lancia il build per le varie distribuzioni in sequenza">
+		<antcall target="distribution">
+			<param name="target" value="coll-${linea.cliente}-${istanza.cliente}"/>
+		</antcall>
+		<antcall target="distribution">
+			<param name="target" value="prod-${linea.cliente}-${istanza.cliente}"/>
+		</antcall>
+	</target>
+
+	<target name="distribution" >		
+		<delete dir="${dir.build}/temp" />
+		<mkdir dir="${dir.build}/temp" />
+
+		<delete dir="${dir.dist}/${target}" /> 
+		<mkdir dir="${dir.dist}/${target}" />
+
+		<concat destfile="${dir.build}/temp/${componente}.sql" append="true" fixlastline="true">
+			<filelist dir="buildfiles" files="comandi_sqlplus"/>
+			<filelist dir="${dir.src}" files="${elencopackage}"/>
+		</concat>
+			
+		<echo file="${dir.build}/temp/${componente}.sql" append="true" message="${elencogrants}" />	 
+
+		<concat destfile="${dir.build}/temp/${componente}.sql" append="true" fixlastline="true">
+				<filelist dir="buildfiles" files="ricompila_tutto"/>
+  	</concat>		
+						
+		<fixcrlf srcdir="${dir.build}/temp/" eol="unix" includes="**" /> <!--converte in formato unix -->	 			 
+		<zip destfile = "${dir.dist}/${target}/${componente}-${versione}.zip" basedir="${dir.build}/temp" update="true"/>		
+
+		<delete dir="${dir.build}/temp" />
+		<delete dir="${dir.build}" />		
+	</target>
+
+	<target name="clean-all" description="Rimuove le cartelle temporanee." depends="clean-dist, clean-temp"/>
+
+	<target name="clean-temp" description="Rimuove la cartella dei files temporanei di build.">
+		<delete dir="${dir.build}" />
+	</target>
+
+	<target name="clean-dist" description="Rimuove la cartella delle distribuzioni.">
+		<delete dir="${dir.dist}"/>
+	</target> 
+
+</project>

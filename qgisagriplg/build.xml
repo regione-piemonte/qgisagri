@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="qgisagri.rpqape000" xmlns:ivy="antlib:fr.jayasoft.ivy.ant" default="distribution">
+	<description>Build file per componente qgisagri.agriapi</description>
+
+	<target name="distribution" description="Crea l'archivio per un ambiente">
+		<fail unless="target" message="target non specificato" />
+		<loadproperties srcFile="buildfiles/build.properties" />
+		<delete dir="dist/${target}" />
+		<mkdir dir="dist/${target}" />
+		<tar destfile="dist/${target}/${app.componente}-${app.version}.tar">
+			<tarfileset dir="buildfiles" includes="info.txt" />
+		</tar>
+	</target>
+
+</project>

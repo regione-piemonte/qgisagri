@@ -1,0 +1,2 @@
+Questa componente viene deployata direttamente dal gruppo di progetto.
+Al momento non è previsto il packaging tramite Jenkins.

@@ -1,0 +1,18 @@
+##--------------------------------
+## QGIS Agri plugin - Utenti PA
+##--------------------------------
+includes: [ config.yaml ]
+
+##---------------------------
+## Context settings
+##---------------------------
+context: 
+   useClientCentificate: true
+
+##---------------------------
+## Agri services settings
+##---------------------------
+agri_service:
+   resources:
+      Autenticazione:
+        redirectPath: "https://<HOSTNAME>/ssp_liv1_sisp_liv1_spid_GASPRP_AGRIC/Shibboleth.sso/Login?entityID=IDENTITY_PROVIDER_2_PA_SECURE.RUPARPIEMONTE.IT&target=https://<HOSTNAME>/agriapi/json/layer/2.0/getRuoli"

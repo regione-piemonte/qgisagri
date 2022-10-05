@@ -1,0 +1,1672 @@
+##--------------------------------
+## Processing sripts - Settings
+##--------------------------------
+processing:
+  
+  #########################################
+  checkHoleSuoli:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliCondNoCondErrFix'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliNoCondErrFix}'
+             - '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliAllFix'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCondNoCondErrFix}'
+             - '{OUTPUT_suoliNoCondFix}'     
+          OUTPUT: 'memory:' 
+
+      - name: 'native:dissolve'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:' 
+
+      - name: 'native:deleteholes'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:' 
+
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliNoCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:deleteholes'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        alias: 'suoliDiffSingle'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:extractbyexpression'
+        alias: 'suoliHoleErr'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.01'
+          OUTPUT: 'memory:'
+
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliHoleErr}'
+
+      - name: 'native:extractbylocation'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliHoleErr}'
+          INTERSECT: '{OUTPUT_suoliCondNoCondErrFix}'
+          PREDICATE: [4]
+          OUTPUT: 'memory:' 
+          
+  #########################################
+  checkHoleSuoli2:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+       
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+              
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+              
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliCondNoCondErrFix'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliNoCondErrFix}'
+             - '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliAllFix'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCondNoCondErrFix}'
+             - '{OUTPUT_suoliNoCondFix}'     
+          OUTPUT: 'memory:' 
+
+      - name: 'native:dissolve'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:' 
+
+      - name: 'native:deleteholes'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:' 
+
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliNoCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:deleteholes'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:buffer'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          DISSOLVE: false
+          DISTANCE: -0.0001
+          END_CAP_STYLE: 0
+          JOIN_STYLE: 0
+          MITER_LIMIT: 2
+          SEGMENTS: 5
+          
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        alias: 'suoliDiffSingle'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:extractbyexpression'
+        alias: 'suoliHoleErr'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.01'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliHoleErr}'
+
+      - name: 'native:extractbylocation'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliHoleErr}'
+          INTERSECT: '{OUTPUT_suoliCondNoCondErrFix}'
+          PREDICATE: [4]
+          OUTPUT: 'memory:'
+  
+  #########################################
+  checkHoleSuoli3:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliCondNoCondErrFix'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliNoCondErrFix}'
+             - '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+        
+      - name: 'native:polygonfromlayerextent'
+        alias: 'suoliNoCondExt'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliNoCondFix}'
+          OUTPUT: 'memory:'
+          ROUND_TO: 1
+        
+      - name: 'native:polygonfromlayerextent'
+        alias: 'suoliNoCondErrExt'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+          ROUND_TO: 1
+        
+      - name: 'native:polygonfromlayerextent'
+        alias: 'suoliCondExt'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+          ROUND_TO: 1
+          
+      - name: 'native:mergevectorlayers'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliNoCondExt}'
+             - '{OUTPUT_suoliNoCondErrExt}'
+             - '{OUTPUT_suoliCondExt}'            
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+       
+      - name: 'native:dissolve'
+        alias: 'suoliAllExt'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliNoCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliCondFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliAllExt}'
+          OVERLAY: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        alias: 'suoliAll'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:deleteholes'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OVERLAY: '{OUTPUT_suoliAll}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:extractbyexpression'
+        alias: 'suoliHoleErr'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.01'
+          OUTPUT: 'memory:'
+
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliHoleErr}'
+
+      - name: 'native:extractbylocation'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliHoleErr}'
+          INTERSECT: '{OUTPUT_suoliCondNoCondErrFix}'
+          PREDICATE: [4]
+          OUTPUT: 'memory:'
+   
+  #########################################
+  checkCoverSuoli:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "flagCessato != '1' AND flagConduzione = 'S'"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleCond'
+        loadInToc: false
+#        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:symmetricaldifference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleCond}'
+          OVERLAY: '{OUTPUT_suoliLavLayer}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+     
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+#        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.1'
+          OUTPUT: 'memory:'
+ 
+      - name: 'native:orderbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area( $geometry )'
+          ASCENDING: false
+          NULLS_FIRST: false
+          OUTPUT: 'memory:'
+          
+  #########################################
+  checkCoverSuoli2:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "flagCessato != '1' AND flagConduzione = 'S'"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:dissolve'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleCond'
+        loadInToc: false
+#        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:symmetricaldifference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleCond}'
+          OVERLAY: '{OUTPUT_suoliLavLayer}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+     
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+#        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.1'
+          OUTPUT: 'memory:'
+ 
+      - name: 'native:orderbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area( $geometry )'
+          ASCENDING: false
+          NULLS_FIRST: false
+          OUTPUT: 'memory:'
+
+
+  #########################################
+  checkCoverSuoliPart:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "flagCessato != '1' AND flagConduzione = 'S'"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleCond'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliLayer}'
+          EXPRESSION: "cessato != 1 AND (idFeaturePadre IS NULL OR array_length( array_remove_all( string_to_array( replace( idFeaturePadre, array('[',']'),'' ) ), '' ) ) = 0)"
+          OUTPUT: 'memory:'
+      
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliLavLayer}'
+          
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleCond}'
+          
+      - name: 'native:joinattributesbylocation'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliLavLayer}'
+          JOIN: '{OUTPUT_particelleCond}'
+          PREDICATE: [0]
+          METHOD: 0
+          PREFIX: ''
+          JOIN_FIELDS: ['numeroParticella']
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'numeroParticella IS NULL'
+          OUTPUT: 'memory:'
+  
+      
+  #########################################
+  checkDeletedSuoli:
+    alghoritms:
+      - name: 'native:mergevectorlayers'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{suoliCondLayer}'
+             - '{suoliNoCondErrLayer}'
+             
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliEdit'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+#          INPUT: '{suoliLayer}'
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'cessato = 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:dissolve'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliDelLayer'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        parameters:
+#          INPUT: '{suoliLayer}'
+          INPUT: '{OUTPUT_suoliEdit}'
+          EXPRESSION: 'cessato != 1 AND (modificato = 1 OR flagLavorato = 1 OR flagSospensione = 1)'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliDelLayer}'
+          OVERLAY: '{OUTPUT_suoliLavLayer}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+     
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > {TOLL_COMP_CESSATI}'
+          OUTPUT: 'memory:'
+          
+          
+  #########################################
+  checkDeletedSuoli2:
+    alghoritms:
+      - name: 'native:mergevectorlayers'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{suoliCondLayer}'
+             - '{suoliNoCondErrLayer}'
+             
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliEdit'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+#          INPUT: '{suoliLayer}'
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'cessato = 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliDelLayer'
+        loadInToc: false
+        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_suoliEdit}'
+          EXPRESSION: 'cessato != 1 AND (modificato = 1 OR flagLavorato = 1 OR flagSospensione = 1)'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:union'
+        alias: 'suoliDelLayerUN'
+        loadInToc: false
+        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_suoliDelLayer}'
+          OVERLAY: '{OUTPUT_suoliDelLayer}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:union'
+        alias: 'suoliLavLayerUN'
+        loadInToc: false
+        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_suoliLavLayer}'
+          OVERLAY: '{OUTPUT_suoliLavLayer}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:union'
+        loadInToc: false
+        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_suoliDelLayerUN}'
+          OVERLAY: '{OUTPUT_suoliLavLayerUN}'
+          OVERLAY_FIELDS_PREFIX: '_DL_'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:deleteduplicategeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+     
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        groupToc: 'SUOLI'
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: '"_DL_OGC_FID" IS NULL AND area($geometry) > {TOLL_COMP_CESSATI}'
+          OUTPUT: 'memory:'
+          
+  #########################################
+  checkTopoParticelle:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "flagCessato != '1'"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleFixed'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:intersection'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleFixed}'
+          OVERLAY: '{OUTPUT_particelleFixed}'
+          INPUT_FIELDS: ['OGC_FID','flagLavorato']
+          OVERLAY_FIELDS: ['OGC_FID']
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: "(flagLavorato = '1') AND ( OGC_FID != OGC_FID_2) AND (area($geometry) > 0.1)"
+          OUTPUT: 'memory:'
+          
+  #########################################
+  checkTopoSuoli:
+    alghoritms:
+      - name: 'native:extractbyattribute'
+        alias: 'suoliCond'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          FIELD: 'cessato'
+          OPERATOR: 1
+          VALUE: '1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyattribute'
+        alias: 'suoliNoCondErr'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          FIELD: 'cessato'
+          OPERATOR: 1
+          VALUE: '1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyattribute'
+        alias: 'suoliNoCond'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          FIELD: 'cessato'
+          OPERATOR: 1
+          VALUE: '1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliTotali'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCond}'
+             - '{OUTPUT_suoliNoCondErr}'
+             - '{OUTPUT_suoliNoCond}'
+             
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliTotaliFixed'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliTotali}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:intersection'
+        alias: 'suoliInters'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliTotaliFixed}'
+          OVERLAY: '{OUTPUT_suoliTotaliFixed}'
+          INPUT_FIELDS: ['OGC_FID','tipoSuolo']
+          OVERLAY_FIELDS: ['OGC_FID','tipoSuolo']
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        indexToc: -1
+        parameters:
+          INPUT: '{OUTPUT_suoliInters}'
+          EXPRESSION: "( OGC_FID != OGC_FID_2) AND ( tipoSuolo != 'NO_COND' OR tipoSuolo_2 != 'NO_COND' ) AND (area($geometry) > 0.1)"
+          OUTPUT: 'memory:'
+          
+#      - name: 'native:extractbyattribute'
+#        alias: 'suoliTotaliFixedCond'
+#        loadInToc: false
+#        parameters:
+#          INPUT: '{OUTPUT_suoliTotaliFixed}'
+#          FIELD: 'tipoSuolo'
+#          OPERATOR: 1
+#          VALUE: 'NO_COND'
+#          OUTPUT: 'memory:'
+#          
+#      - name: 'native:intersection'
+#        alias: 'suoliInters'
+#        loadInToc: false
+#        parameters:
+#          INPUT: '{OUTPUT_suoliTotaliFixed}'
+#          OVERLAY: '{OUTPUT_suoliTotaliFixedCond}'
+#          INPUT_FIELDS: ['OGC_FID','tipoSuolo']
+#          OVERLAY_FIELDS: ['OGC_FID','tipoSuolo']
+#          OUTPUT: 'memory:'
+#          
+#      - name: 'native:extractbyexpression'
+#        loadInToc: false
+#        indexToc: -1
+#        parameters:
+#          INPUT: '{OUTPUT_suoliInters}'
+#          EXPRESSION: "( OGC_FID != OGC_FID_2) AND ( tipoSuolo != 'NO_COND' OR tipoSuolo_2 != 'NO_COND' ) AND (area($geometry) > 0.1)"
+#          OUTPUT: 'memory:'
+   
+   
+  #########################################
+  checkCoverParticelleLavorate:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        alias: 'particelleLav'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: 'NOT(COALESCE(flagCessato,0) = 1) AND flagLavorato = 1'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+       
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+              
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+       
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliAll'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCondFix}'
+             - '{OUTPUT_suoliNoCondFix}'
+             - '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliAll}'
+          
+      - name: 'native:createspatialindex'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleLav}'
+          
+      - name: 'native:extractbylocation'
+        alias: 'suoliIntersPart'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliAll}'
+          INTERSECT: '{OUTPUT_particelleLav}'
+          PREDICATE: [0]
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleLav}'
+          OVERLAY: '{OUTPUT_suoliIntersPart}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:multiparttosingleparts'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.1'
+          OUTPUT: 'memory:'
+     
+  
+  #########################################
+  checkCoverParticelleSuoli:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: 'NOT(COALESCE(flagCessato,0) = 1)'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+#       - name: 'native:extractbyexpression'
+#         alias: 'particelleLavFix'
+#         loadInToc: false
+#         parameters:
+#           INPUT: '{OUTPUT_particelleFix}'
+#           EXPRESSION: 'NOT(COALESCE(flagCessato,0) = 1) AND flagLavorato = 1'
+#           OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliAll'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCondFix}'
+             - '{OUTPUT_suoliNoCondFix}'
+             - '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:symmetricaldifference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleFix}'
+          OVERLAY: '{OUTPUT_suoliAll}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        alias: 'suoliDiffPart'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+#       - name: 'native:createspatialindex'
+#         loadInToc: false
+#         parameters:
+#           INPUT: '{OUTPUT_suoliDiffPart}'
+#           
+#       - name: 'native:createspatialindex'
+#         loadInToc: false
+#         parameters:
+#           INPUT: '{OUTPUT_particelleLavFix}'
+#           
+#       - name: 'native:extractbylocation'
+#         alias: 'suoliIntersPart'
+#         loadInToc: false
+#         parameters:
+#           INPUT: '{OUTPUT_suoliDiffPart}'
+#           INTERSECT: '{OUTPUT_particelleLavFix}'
+#           PREDICATE: [0]
+#           OUTPUT: 'memory:'
+
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: "COALESCE(tipoSuolo,'') != 'NO_COND' AND area($geometry) > 0.1"
+          OUTPUT: 'memory:'
+  
+  #########################################
+  checkCoverParticelleSuoli2:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: 'NOT(COALESCE(flagCessato,0) = 1)'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliAll'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCondFix}'
+             - '{OUTPUT_suoliNoCondFix}'
+             - '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:buffer'
+        alias: 'particelleBuff'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleFix}'
+          DISSOLVE: False
+          DISTANCE: 0.000001
+          OUTPUT: 'memory:'
+          
+      - name: 'native:buffer'
+        alias: 'suoliBuff'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliAll}'
+          DISSOLVE: False
+          DISTANCE: 0.000001
+          OUTPUT: 'memory:'
+
+      - name: 'native:symmetricaldifference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleBuff}'
+          OVERLAY: '{OUTPUT_suoliBuff}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:multiparttosingleparts'
+        alias: 'suoliDiffPart'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: "COALESCE(tipoSuolo,'') != 'NO_COND' AND area($geometry) > 0.1"
+          OUTPUT: 'memory:'
+          
+  #########################################
+  checkConfineFoglio:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        alias: 'suoliLavLayer'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliLayer}'
+          EXPRESSION: 'cessato != 1'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:difference'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suoliLavLayer}'
+          OVERLAY: '{confineLayer}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'area($geometry) > 0.01'
+          OUTPUT: 'memory:'
+  
+  #########################################
+  suoliParticelle:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        alias: 'suolilavorati'
+        loadInToc: false
+        parameters:
+          INPUT: '{inputLayer}'
+          EXPRESSION: "{suoliFilter}"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "{particelleFilter}"
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        alias: 'particelleLayerFixed'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:intersection'
+        loadInToc: false
+        readOnly: true
+        parameters:
+          INPUT: '{OUTPUT_suolilavorati}'
+          OVERLAY: '{OUTPUT_particelleLayerFixed}'
+          INPUT_FIELDS: ['OGC_FID','codiceNazionale','foglio','codiceEleggibilitaRilevata']
+          OVERLAY_FIELDS: ['OGC_FID','idFeature','numeroParticella','subalterno']
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        alias: ''
+        loadInToc: true
+        groupToc: 'SUOLI'
+        indexToc: -1
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'NOT(area($geometry) < {TOLL_AREA_MIN_SUOLO})'
+          OUTPUT: 'memory:{outputLayer}'   
+          
+# UNCOMMENT TO ADD CONTROL ON SUOLI WITHOUT PARTICELLA          
+#       - name: 'native:difference'
+#         alias: ''
+#         loadInToc: true
+#         groupToc: 'SUOLI'
+#         resultAsError: true
+#         parameters:
+#           INPUT: '{OUTPUT_suolilavorati}'
+#           OVERLAY: '{OUTPUT_particelleLayerFixed}'
+#           OUTPUT: 'memory:suoli_senza_particelle' 
+
+  
+  #########################################
+  checkSuoliParticelle:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        alias: 'suolilavorati'
+        loadInToc: false
+        parameters:
+          INPUT: '{inputLayer}'
+          EXPRESSION: "{suoliFilter}"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "{particelleFilter}"
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        alias: 'particelleLayerFixed'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:intersection'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suolilavorati}'
+          OVERLAY: '{OUTPUT_particelleLayerFixed}'
+          INPUT_FIELDS: ['OGC_FID','codiceNazionale','foglio','codiceEleggibilitaRilevata']
+          OVERLAY_FIELDS: ['OGC_FID','idFeature','numeroParticella','subalterno']
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'NOT(area($geometry) < {TOLL_AREA_MIN_SUOLO})'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:joinattributestable'
+        loadInToc: false
+        outputAttributeName: 'NON_MATCHING'
+        parameters:
+          INPUT: '{OUTPUT_suolilavorati}'
+          INPUT_2: '{OUTPUT_PREVIUOS}'
+          FIELD: 'OGC_FID' 
+          FIELD_2: 'OGC_FID'
+          FIELDS_TO_COPY: []
+          PREFIX: '' 
+          METHOD: 1 
+          DISCARD_NONMATCHING: false 
+          NON_MATCHING: 'TEMPORARY_OUTPUT'
+  
+  #########################################
+  checkSuoliParticelle2:
+    alghoritms:
+      - name: 'native:extractbyexpression'
+        alias: 'suolilavorati'
+        loadInToc: false
+        parameters:
+          INPUT: '{inputLayer}'
+          EXPRESSION: "{suoliFilter}"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "{particelleFilter}"
+          OUTPUT: 'memory:'
+
+      - name: 'native:fixgeometries'
+        alias: 'particelleLayerFixed'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:buffer'
+        alias: 'suolilavoratiBuff'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suolilavorati}'
+          DISSOLVE: False
+          DISTANCE: 0.000001
+          OUTPUT: 'memory:'
+          
+      - name: 'native:buffer'
+        alias: 'particelleLayerBuff'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleLayerFixed}'
+          DISSOLVE: False
+          DISTANCE: 0.000001
+          OUTPUT: 'memory:'
+      
+      - name: 'native:intersection'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_suolilavoratiBuff}'
+          OVERLAY: '{OUTPUT_particelleLayerBuff}'
+          INPUT_FIELDS: ['OGC_FID','codiceNazionale','foglio','codiceEleggibilitaRilevata']
+          OVERLAY_FIELDS: ['OGC_FID','idFeature','numeroParticella','subalterno']
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'NOT(area($geometry) < {TOLL_AREA_MIN_SUOLO})'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:joinattributestable'
+        loadInToc: false
+        outputAttributeName: 'NON_MATCHING'
+        parameters:
+          INPUT: '{OUTPUT_suolilavoratiBuff}'
+          INPUT_2: '{OUTPUT_PREVIUOS}'
+          FIELD: 'OGC_FID' 
+          FIELD_2: 'OGC_FID'
+          FIELDS_TO_COPY: []
+          PREFIX: '' 
+          METHOD: 1 
+          DISCARD_NONMATCHING: false 
+          NON_MATCHING: 'TEMPORARY_OUTPUT'
+  
+  #########################################
+  checkSuoliLavParticelle:
+    alghoritms:  
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{particelleLayer}'
+          EXPRESSION: "NOT(COALESCE(flagCessato,0) = 1) AND flagLavorato = 1"
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'particelleFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          OUTPUT: 'memory:'
+         
+      - name: 'native:fixgeometries'
+        alias: 'suoliCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliCondLayer}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondLayer}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:fixgeometries'
+        alias: 'suoliNoCondErrFix'
+        loadInToc: false
+        parameters:
+          INPUT: '{suoliNoCondErrLayer}'
+          OUTPUT: 'memory:'
+          
+      - name: 'native:mergevectorlayers'
+        alias: 'suoliAll'
+        loadInToc: false
+        parameters:
+          CRS: 'EPSG:3003'
+          LAYERS: 
+             - '{OUTPUT_suoliCondFix}'
+             - '{OUTPUT_suoliNoCondFix}'
+             - '{OUTPUT_suoliNoCondErrFix}'
+          OUTPUT: 'memory:'
+      
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'cessato != 1 AND flagLavorato = 0'
+          OUTPUT: 'memory:'
+           
+      - name: 'native:intersection'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_particelleFix}'
+          OVERLAY: '{OUTPUT_PREVIUOS}'
+          INPUT_FIELDS: ['OGC_FID']
+          OVERLAY_FIELDS: ['OGC_FID']
+          OUTPUT: 'memory:'
+          
+      - name: 'native:extractbyexpression'
+        loadInToc: false
+        parameters:
+          INPUT: '{OUTPUT_PREVIUOS}'
+          EXPRESSION: 'NOT(area($geometry) < {TOLL_AREA_MIN_SUOLO})'
+          OUTPUT: 'memory:'   
+         

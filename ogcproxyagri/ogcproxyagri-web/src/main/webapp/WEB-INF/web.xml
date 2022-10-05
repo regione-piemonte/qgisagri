@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>ogcproxy_</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <context-param>
+    <param-name>enable-jwt</param-name>
+    <param-value>${enable-jwt}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>token-context</param-name>
+    <param-value>${token-context}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>needs-proxy</param-name>
+    <param-value>${needs-proxy}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>proxy-host</param-name>
+    <param-value>${proxy-host}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>proxy-port</param-name>
+    <param-value>${proxy-port}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>proxy-scheme</param-name>
+    <param-value>${proxy-scheme}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>source-url</param-name>
+    <param-value>${source-url}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>dest-host</param-name>
+    <param-value>${dest-host}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>dest-port</param-name>
+    <param-value>${dest-port}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>user-key</param-name>
+    <param-value>${user-key}</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>feature-key</param-name>
+    <param-value>${feature-key}</param-value>
+  </context-param>
+
+
+  <filter>
+    <filter-name>Logging Filter</filter-name>
+    <filter-class>it.csi.proxy.ogcproxy.filter.LoggingFilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>Proxy Filter</filter-name>
+    <filter-class>it.csi.proxy.ogcproxy.filter.ProxyFilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>Security Filter</filter-name>
+    <filter-class>it.csi.proxy.ogcproxy.filter.SecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Logging Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Proxy Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Security Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>ProxyServlet</servlet-name>
+    <servlet-class>it.csi.proxy.ogcproxy.ProxyServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProxyServlet</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+</web-app>

@@ -1,0 +1,4 @@
+<jboss-web>
+    <context-root>/agriapi</context-root>
+    <enable-websockets>true</enable-websockets>
+</jboss-web>

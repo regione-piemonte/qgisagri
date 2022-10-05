@@ -1,0 +1,4 @@
+##-----------------------------------
+## QGIS Agri plugin - Utrnti privati
+##-----------------------------------
+includes: [ config.yaml ]

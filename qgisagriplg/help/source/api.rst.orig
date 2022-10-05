@@ -1,0 +1,40 @@
+=============
+API plugin
+=============
+
+__init__.py
+===========
+
+.. automodule:: qgis_agri
+   :members:
+   :undoc-members:
+   :private-members:
+   :special-members:
+   
+   .. autodata:: __PLG_DB3__
+      :annotation:
+	  
+   .. autodata:: __PLG_DEBUG__
+      :annotation:
+	  
+   .. autodata:: __ERROR_TRACEBACK__
+      :annotation:
+	  
+
+Moduli principali
+===================
+
+.. autosummary:: 
+   :toctree: api
+
+   qgis_agri
+   qgis_agri_config
+   qgis_agri_controller
+   resources
+   
+.. autosummary:: qgis_agri
+   :toctree: api
+   
+   qgis_agri.QGISAgri
+   qgis_agri_config.QGISAgriConfig
+   qgis_agri_controller.QGISAgriController
