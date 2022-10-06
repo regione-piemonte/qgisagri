@@ -1,0 +1,25 @@
+name@version *,license *,copyrights *,end-of-support,dependencies,language,repository,email,URL
+aopalliance-1.0.jar,"Public Domain",-,-,-,Java,-,-,-
+commons-codec-1.9.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-dbcp-1.2.2.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-logging-1.2.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-pool-1.3.jar,"Apache-2.0",-,-,-,Java,-,-,-
+filter-v_1_0_0-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-
+gml-v_2_1_2-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-
+httpclient-4.4.1.jar,"Apache-2.0",-,-,-,Java,-,-,-
+httpcore-4.4.1.jar,"Apache-2.0",-,-,-,Java,-,-,-
+jackson-annotations-2.9.0.jar,"Apache-2.0",-,-,-,Java,-,-,-
+jackson-core-2.9.6.jar,"Apache-2.0",-,-,-,Java,-,-,-
+jackson-databind-2.9.6.jar,"Apache-2.0",-,-,-,Java,-,-,-
+jaxb2-basics-runtime-0.6.0.jar,"BSD",-,-,-,Java,-,-,-
+jjwt-0.9.1.jar,"Apache-2.0",-,-,-,Java,-,-,-
+junit-4.4.jar,"CPL-1.0",-,-,-,Java,-,-,-
+log4j-1.2.14.jar,"Apache-2.0",-,-,-,Java,-,-,-
+postgresql-9.0-801.jdbc3.jar,"BSD",-,-,-,Java,-,-,-
+sld-v_1_0_0-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-
+spring-core-3.2.0.RELEASE.jar,"Apache-2.0",-,-,-,Java,-,-,-
+spring-web-3.2.0.RELEASE.jar,"Apache-2.0",-,-,-,Java,-,-,-
+wms-v_1_0_0-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-
+wms-v_1_1_0-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-
+wms-v_1_1_1-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-
+wms-v_1_3_0-schema-1.1.0.jar,"BSD",-,-,-,Java,-,-,-

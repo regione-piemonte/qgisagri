@@ -1,0 +1,49 @@
+name@version *,license *,copyrights *,end-of-support,dependencies,language,repository,email,URL
+GeographicLib-Java-1.49.jar,"MIT",-,-,-,Java,-,-,http://opensource.org/licenses/MIT
+aopalliance-1.0.jar,"Public Domain",-,-,-,Java,-,-,-
+commons-codec-1.7.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-collections-3.2.2.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-dbcp-1.4.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-httpclient-3.1.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-io-2.2.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-lang3-3.9.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-logging-1.1.jar,"Apache-2.0",-,-,-,Java,-,-,-
+commons-pool-1.5.4.jar,"Apache-2.0",-,-,-,Java,-,-,-
+csi-stadapter-1.4.6.jar,"Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta)",CSI-Piemonte,-,-,Java,-,-,-
+cxf-rt-core-2.4.6-redhat-1.jar,"Apache-2.0",Redhat,-,-,Java,-,-,-
+ejml-core-0.34.jar,"Apache-2.0",-,-,-,Java,-,-,-
+ejml-ddense-0.34.jar,"Apache-2.0",-,-,-,Java,-,-,-
+gt-cql-21.2.jar,"LGPL-3.0",-,-,-,Java,-,-,-
+gt-jdbc-postgis-21.2.jar,"LGPL-3.0",-,-,-,Java,-,-,-
+hsqldb-2.4.1.jar,"HSQLDB License:BSD Like",-,-,-,Java,-,-,http://hsqldb.org/web/hsqlLicense.html
+iridev2-pep-intf-2.0.0.jar,"Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta)",CSI-Piemonte,-,-,Java,-,-,-
+jackson-core-asl-1.9.2-redhat-1.jar,"Apache-2.0",Redhat,-,-,Java,-,-,-
+jackson-jaxrs-1.9.13.jar,"Apache-2.0;LGPL-2.1",-,-,-,Java,-,-,-
+jackson-mapper-asl-1.9.2-redhat-1.jar,"Apache-2.0",Redhat,-,-,Java,-,-,-
+jai-core-1.1.3.jar,"JDL (Java Distribution License) - Sun Microsystems, Inc.  Binary Code License Agreement",Sun Microsystems, Inc. ,-,-,Java,-,-,-
+jaxrs-api-3.0.7.Final.jar,"Apache-2.0",Ryan J. McDonough, Bill Burke,-,-,Java,-,-,-
+jgridshift-1.0.jar,"LGPL-2.0",-,-,-,Java,-,-,-
+json-simple-1.1.1.jar,"Apache-2.0",-,-,-,Java,-,-,-
+jsr311-api-1.1.1.jar,"CDDL-1.0",-,-,-,Java,-,-,-
+jts-core-1.16.1.jar,"EPL-1.0; EDL-1.0",-,-,-,Java,-,-,-
+jts-io-common-1.16.1.jar,"EDL-1.0",-,-,-,Java,-,-,-
+neethi-3.0.1-redhat-1.jar,"Apache-2.0",Redhat,-,-,Java,-,-,-
+ojdbc6.jar,"Oracle Free Use Terms and Conditions (FUTC)",-,-,-,Java,-,-,-
+papuaserv-wsclient-rest-1.0.0.jar,"Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta)",CSI-Piemonte,-,-,Java,-,-,-
+postgresql-42.2.5.jar,"BSD-2-Clause",-,-,-,Java,-,-,https://jdbc.postgresql.org/about/license.html
+resteasy-jaxb-provider-2.3.10.Final-redhat-1.jar,"Apache-2.0",Redhat,-,-,Java,-,-,-
+shibboleth-shibfilter-1.0.0.jar,"Apache-2.0",-,-,-,Java,-,-,-
+si-quantity-0.7.1.jar,"BSD-3-Clause",-,-,-,Java,-,-,http://opensource.org/licenses/BSD-3-Clause
+si-units-java8-0.7.1.jar,"BSD-3-Clause",-,-,-,Java,-,-,-
+siapcommws-client-3.5.0.jar,"Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta)",CSI-Piemonte,-,-,Java,-,-,-
+spring-core-4.1.3.RELEASE.jar,"Apache-2.0",-,-,-,Java,-,-,-
+spring-web-4.1.3.RELEASE.jar,"Apache-2.0",-,-,-,Java,-,-,-
+spring-webmvc-4.1.3.RELEASE.jar,"Apache-2.0",-,-,-,Java,-,-,-
+sqlite-jdbc-3.32.3.2.jar,"Apache-2.0",-,-,-,Java,-,-,-
+systems-common-java8-0.7.2.jar,"BSD",-,-,-,Java,-,-,-
+unit-api-1.0.jar,"BSD",-,-,-,Java,-,-,-
+uom-lib-common-1.0.2.jar,"BSD",-,-,-,Java,-,-,-
+uom-se-1.0.8.jar,"BSD",-,-,-,Java,-,-,-
+wsdl4j-1.6.2-redhat-1.jar,"CPL-1.0",Redhat,-,-,Java,-,-,http://sf.net/projects/wsdl4j
+xml-commons-resolver-1.2.jar,"Apache-2.0",-,-,-,Java,-,-,-
+xmlschema-core-2.0.2-redhat-1.jar,"Apache-2.0",RedHat,-,-,Java,-,-,-
